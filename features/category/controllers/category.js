@@ -1,6 +1,12 @@
 const Category = require("../models/category");
 const slugify = require('slugify')
 const asyncHandler = require('express-async-handler');
+const ApiError = require("../../../config/base/models/apiError");
+
+
+const checkExists = (category, id, next) => {
+  if (!category) throw next(new ApiError(404, `No category for this id ${id}`));
+}
 
 exports.index = asyncHandler(async (req, res) => {
   const page = req.query.page * 1 || 1;
@@ -10,14 +16,11 @@ exports.index = asyncHandler(async (req, res) => {
   res.status(200).json({data: categories});
 });
 
-exports.show = asyncHandler(async (req, res) => {
+exports.show = asyncHandler(async (req, res, next) => {
   const id = req.params.id;
   const category = await Category.findById(id);
-  if (!category) {
-    res.status(404).json({message: `No category for this id ${id}`});
-  } else {
-    res.status(200).json({data: category});
-  }
+  checkExists(category, id, next);
+  res.status(200).json({data: category});
 });
 
 exports.save = asyncHandler(async (req, res) => {
@@ -27,30 +30,20 @@ exports.save = asyncHandler(async (req, res) => {
 });
 
 
-exports.update = asyncHandler(async (req, res) => {
+exports.update = asyncHandler(async (req, res, next) => {
   const id = req.params.id;
   const name = req.body.name;
-  const category = await Category.findByIdAndUpdate(
-      id,
-      {name, slug: slugify(name)},
-      {new: true}
-  );
-  if (!category) {
-    res.status(404).json({message: `No category for this id ${id}`});
-  } else {
-    res.status(200).json({data: category});
-  }
+  const category = await Category.findByIdAndUpdate(id, {name, slug: slugify(name)}, {new: true});
+  checkExists(category, id, next);
+  res.status(200).json({data: category});
 });
 
 
-exports.destroy = asyncHandler(async (req, res) => {
+exports.destroy = asyncHandler(async (req, res, next) => {
   const id = req.params.id;
   const category = await Category.findByIdAndDelete(id);
-  if (!category) {
-    res.status(404).json({message: `No category for this id ${id}`});
-  } else {
-    res.status(204).send();
-  }
+  checkExists(category, id, next);
+  res.status(204).send();
 });
 
 
