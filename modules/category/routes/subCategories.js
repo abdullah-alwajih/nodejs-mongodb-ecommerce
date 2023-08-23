@@ -1,5 +1,5 @@
 const express = require('express');
-const subCategoryRoute = express.Router({mergeParams: true}); // Initialize router
+const router = express.Router({mergeParams: true}); // Initialize router
 
 const {
   index, show, save, update, destroy
@@ -13,13 +13,13 @@ const {
 } = require("../middlewares/subCategory");
 
 // Define routes and use middleware
-subCategoryRoute.route('/')
+router.route('/')
     .get(index)
     .post(saveSubCategoryMiddleware, save);
 
-subCategoryRoute.route('/:id/')
+router.route('/:id/')
     .get(showSubCategoryMiddleware, show)
     .put(updateSubCategoryMiddleware, update)
     .delete(deleteSubCategoryMiddleware, destroy);
 
-module.exports = subCategoryRoute; // Export the router
+module.exports = router; // Export the router

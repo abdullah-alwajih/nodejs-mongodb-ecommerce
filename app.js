@@ -6,8 +6,8 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
 const dbConnection = require("./config/database");
-const categoryRouter = require("./modules/category/routes/categoryRoute");
-const subCategoryRouter = require("./modules/category/routes/subCategoryRoute");
+const categoryRouter = require("./modules/category/routes/categories");
+const subCategoryRouter = require("./modules/category/routes/subCategories");
 const ApiError = require("./config/base/models/apiError");
 const globalError = require("./config/middlewares/globalError");
 
