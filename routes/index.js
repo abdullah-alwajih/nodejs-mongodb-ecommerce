@@ -1,5 +1,5 @@
 // const express = require('express');
-// const {save} = require("../features/category/controllers/category");
+// const {save} = require("../modules/category/controllers/category");
 // const router = express.Router();
 //
 // /* GET home page. */
