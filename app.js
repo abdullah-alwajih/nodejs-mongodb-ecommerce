@@ -22,7 +22,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api/categories', categoryRouter);
-app.use('/api/subCategory', subCategoryRouter);
+app.use('/api/subcategories', subCategoryRouter);
 app.all('*', (req, res, next) =>
     next(new ApiError(400, `Can't find this route: ${req.originalUrl}`)));
 

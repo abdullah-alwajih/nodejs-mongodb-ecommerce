@@ -12,7 +12,7 @@ exports.index = asyncHandler(async (req, res) => {
   const page = req.query.page * 1 || 1;
   const limit = req.query.limit * 1 || 5;
   const skip = (page - 1) * limit;
-  const subCategories = await SubCategory.find({}).skip(skip).limit(limit);
+  const subCategories = await SubCategory.find(req.query.filter).skip(skip).limit(limit);
   // .populate({path: 'category', select: 'name -_id'});
   res.status(200).json({data: subCategories});
 });

@@ -10,12 +10,13 @@ const {
   saveSubCategoryMiddleware,
   deleteSubCategoryMiddleware,
   updateSubCategoryMiddleware,
+  setCategoryIdToBodyMiddleware, filterSubcategoryMiddleware,
 } = require("../middlewares/subCategory");
 
 // Define routes and use middleware
 router.route('/')
-    .get(index)
-    .post(saveSubCategoryMiddleware, save);
+    .get(filterSubcategoryMiddleware, index)
+    .post(setCategoryIdToBodyMiddleware, saveSubCategoryMiddleware, save);
 
 router.route('/:id/')
     .get(showSubCategoryMiddleware, show)
