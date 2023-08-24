@@ -6,16 +6,12 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
 const dbConnection = require("./config/database");
-const categoryRouter = require("./modules/category/routes/categories");
-const subCategoryRouter = require("./modules/category/routes/subCategories");
-const brandsRouter = require("./modules/brands/routes/brand");
-const ApiError = require("./config/base/models/apiError");
 const globalError = require("./config/middlewares/globalError");
 const initRoutes = require("./config/routes");
 
 const app = express();
 
-dbConnection()
+dbConnection();
 
 app.use(logger('dev'));
 app.use(express.json());
