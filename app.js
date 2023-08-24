@@ -8,8 +8,10 @@ const logger = require('morgan');
 const dbConnection = require("./config/database");
 const categoryRouter = require("./modules/category/routes/categories");
 const subCategoryRouter = require("./modules/category/routes/subCategories");
+const brandsRouter = require("./modules/brands/routes/brand");
 const ApiError = require("./config/base/models/apiError");
 const globalError = require("./config/middlewares/globalError");
+const initRoutes = require("./config/routes");
 
 const app = express();
 
@@ -21,10 +23,8 @@ app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/api/categories', categoryRouter);
-app.use('/api/subcategories', subCategoryRouter);
-app.all('*', (req, res, next) =>
-    next(new ApiError(400, `Can't find this route: ${req.originalUrl}`)));
+initRoutes(app);
+
 
 app.use(globalError);
 
