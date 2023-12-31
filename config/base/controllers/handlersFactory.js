@@ -38,7 +38,7 @@ exports.show = (Model) =>
     }
     res.status(200).json({data: document});
   });
-exports.index = (Model, modelName = '') =>
+exports.index = (Model, searchableFields) =>
   asyncHandler(async (req, res) => {
     let filter = {};
     if (req.filterObj) {
@@ -49,7 +49,7 @@ exports.index = (Model, modelName = '') =>
     const apiFeatures = new ApiFeatures(Model.find(filter), req.query)
     .paginate(documentsCounts)
     .filter()
-    .search(modelName)
+    .search(searchableFields)
     .limitFields()
     .sort();
     // Execute query

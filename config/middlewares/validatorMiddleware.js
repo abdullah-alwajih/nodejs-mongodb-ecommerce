@@ -1,4 +1,8 @@
-const {validationResult} = require("express-validator");
+const {validationResult, param} = require("express-validator");
+
+exports.mongoIdRule = param('id').isMongoId().withMessage('Invalid id format');
+
+
 const validatorMiddleware = (req, res, next) => {
   const result = validationResult(req);
   if (result.isEmpty()) next();
