@@ -1,51 +1,30 @@
-const Category = require("../models/category");
-const slugify = require('slugify')
-const asyncHandler = require('express-async-handler');
-const ApiError = require("../../../config/base/models/apiError");
+const factory = require("../../../config/base/controllers/handlersFactory");
 
+const Category = require('../models/category');
 
-const checkExists = (category, id, next) => {
-  if (!category) throw next(new ApiError(404, `No category for this id ${id}`));
-}
+// @desc    Get list of categories
+// @route   GET /api/v1/categories
+// @access  Public
 
-exports.index = asyncHandler(async (req, res) => {
-  const page = req.query.page * 1 || 1;
-  const limit = req.query.limit * 1 || 5;
-  const skip = (page - 1) * limit;
-  console.log(req.params)
-  const categories = await Category.find({}).skip(skip).limit(limit);
-  res.status(200).json({data: categories});
-});
+// Build query
+exports.getCategories = factory.index(Category);
 
-exports.show = asyncHandler(async (req, res, next) => {
-  const id = req.params.id;
-  const category = await Category.findById(id);
-  checkExists(category, id, next);
-  res.status(200).json({data: category});
-});
+// @desc    Get specific category by id
+// @route   GET /api/v1/categories/:id
+// @access  Public
+exports.getCategory = factory.show(Category);
 
-exports.save = asyncHandler(async (req, res) => {
-  const name = req.body.name;
-  const category = await Category.create({name, slug: slugify(name)});
-  res.status(201).json({data: category});
-});
+// @desc    Create category
+// @route   POST  /api/v1/categories
+// @access  Private
+exports.storeCategory = factory.store(Category);
 
+// @desc    Update specific category
+// @route   PUT /api/v1/categories/:id
+// @access  Private
+exports.updateCategory = factory.update(Category);
 
-exports.update = asyncHandler(async (req, res, next) => {
-  const id = req.params.id;
-  const name = req.body.name;
-  const category = await Category.findByIdAndUpdate(id, {name, slug: slugify(name)}, {new: true});
-  checkExists(category, id, next);
-  res.status(200).json({data: category});
-});
-
-
-exports.destroy = asyncHandler(async (req, res, next) => {
-  const id = req.params.id;
-  const category = await Category.findByIdAndDelete(id);
-  checkExists(category, id, next);
-  res.status(204).send();
-});
-
-
-
+// @desc    Delete specific category
+// @route   DELETE /api/v1/categories/:id
+// @access  Private
+exports.deleteCategory = factory.delete(Category);

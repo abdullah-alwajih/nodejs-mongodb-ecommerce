@@ -2,12 +2,7 @@ const express = require('express');
 const router = express.Router(); // Initialize router
 
 const {
-  getCategories,
-  getCategory,
-  storeCategory,
-  updateCategory,
-  deleteCategory
-  
+  index, show, save, update, destroy
 } = require("../controllers/category");
 
 const {
@@ -18,13 +13,13 @@ const subCategoryRoute = require("./subCategories"); // Import subCategoryRoute
 
 // Define routes and use middleware
 router.route('/')
-    .get(getCategories)
-    .post(saveCategoryMiddleware, storeCategory);
+    .get(index)
+    .post(saveCategoryMiddleware, save);
 
 router.route('/:id/')
-    .get(showCategoryMiddleware, getCategory)
-    .put(updateCategoryMiddleware, updateCategory)
-    .delete(deleteCategoryMiddleware, deleteCategory);
+    .get(showCategoryMiddleware, show)
+    .put(updateCategoryMiddleware, update)
+    .delete(deleteCategoryMiddleware, destroy);
 
 router.use('/:categoryId/subcategories/', subCategoryRoute); // Use subCategoryRoute
 

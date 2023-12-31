@@ -1,51 +1,28 @@
+const factory = require("../../../config/base/controllers/handlersFactory");
 const Brand = require("../models/brand");
-const slugify = require('slugify')
-const asyncHandler = require('express-async-handler');
-const ApiError = require("../../../config/base/models/apiError");
 
 
-const checkExists = (brand, id, next) => {
-  if (!brand) throw next(new ApiError(404, `No brand for this id ${id}`));
-}
+// @desc    Get list of brands
+// @route   GET /api/v1/brands
+// @access  Public
+exports.getBrands = factory.index(Brand);
 
-exports.index = asyncHandler(async (req, res) => {
-  const page = req.query.page * 1 || 1;
-  const limit = req.query.limit * 1 || 5;
-  const skip = (page - 1) * limit;
-  console.log(req.params)
-  const brands = await Brand.find({}).skip(skip).limit(limit);
-  res.status(200).json({data: brands});
-});
+// @desc    Get specific brand by id
+// @route   GET /api/v1/brands/:id
+// @access  Public
+exports.getBrand = factory.show(Brand);
 
-exports.show = asyncHandler(async (req, res, next) => {
-  const id = req.params.id;
-  const brand = await Brand.findById(id);
-  checkExists(brand, id, next);
-  res.status(200).json({data: brand});
-});
+// @desc    Create brand
+// @route   POST  /api/v1/brands
+// @access  Private
+exports.storeBrand = factory.store(Brand);
 
-exports.save = asyncHandler(async (req, res) => {
-  const name = req.body.name;
-  const brand = await Brand.create({name, slug: slugify(name)});
-  res.status(201).json({data: brand});
-});
+// @desc    Update specific brand
+// @route   PUT /api/v1/brands/:id
+// @access  Private
+exports.updateBrand = factory.update(Brand);
 
-
-exports.update = asyncHandler(async (req, res, next) => {
-  const id = req.params.id;
-  const name = req.body.name;
-  const brand = await Brand.findByIdAndUpdate(id, {name, slug: slugify(name)}, {new: true});
-  checkExists(brand, id, next);
-  res.status(200).json({data: brand});
-});
-
-
-exports.destroy = asyncHandler(async (req, res, next) => {
-  const id = req.params.id;
-  const brand = await Brand.findByIdAndDelete(id);
-  checkExists(brand, id, next);
-  res.status(204).send();
-});
-
-
-
+// @desc    Delete specific brand
+// @route   DELETE /api/v1/brands/:id
+// @access  Private
+exports.deleteBrand = factory.delete(Brand);

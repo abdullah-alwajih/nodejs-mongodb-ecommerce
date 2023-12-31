@@ -2,22 +2,29 @@ const express = require('express');
 const router = express.Router(); // Initialize router
 
 const {
-  index, show, save, update, destroy
+  getBrands,
+  getBrand,
+  storeBrand,
+  updateBrand,
+  deleteBrand
 } = require("../controllers/brand");
 
 const {
-  showBrandMiddleware, saveBrandMiddleware, updateBrandMiddleware, deleteBrandMiddleware,
+  showBrandMiddleware,
+  saveBrandMiddleware,
+  updateBrandMiddleware,
+  deleteBrandMiddleware,
 } = require("../middlewares/brand");
 
 
 // Define routes and use middleware
 router.route('/')
-    .get(index)
-    .post(saveBrandMiddleware, save);
+    .get(getBrands)
+    .post(saveBrandMiddleware, storeBrand);
 
 router.route('/:id/')
-    .get(showBrandMiddleware, show)
-    .put(updateBrandMiddleware, update)
-    .delete(deleteBrandMiddleware, destroy);
+    .get(showBrandMiddleware, getBrand)
+    .put(updateBrandMiddleware, updateBrand)
+    .delete(deleteBrandMiddleware, deleteBrand);
 
 module.exports = router; // Export the router
