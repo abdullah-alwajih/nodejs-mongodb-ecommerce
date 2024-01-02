@@ -28,8 +28,8 @@ exports.update = (Model) =>
 
 exports.store = (Model) =>
   asyncHandler(async (req, res) => {
-    const newDoc = await Model.create(req.body);
-    res.status(201).json({data: newDoc});
+    const document = await Model.create(req.body);
+    res.status(201).json({data: document});
   });
 
 exports.show = (Model) =>

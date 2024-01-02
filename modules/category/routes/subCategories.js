@@ -6,25 +6,28 @@ const {
   getSubCategory,
   storeSubCategory,
   updateSubCategory,
-  deleteSubCategory
-} = require("../controllers/subCategory");
+  deleteSubCategory,
+  setCategoryIdToBody,
+  createFilterObj,
+} = require("../manager/controllers/subCategory");
 
 const {
   showSubCategoryMiddleware,
   saveSubCategoryMiddleware,
   deleteSubCategoryMiddleware,
   updateSubCategoryMiddleware,
-  setCategoryIdToBodyMiddleware, filterSubcategoryMiddleware,
-} = require("../middlewares/subCategory");
+  // setCategoryIdToBodyMiddleware,
+  // filterSubcategoryMiddleware,
+} = require("./subCategoryMiddleware");
 
 // Define routes and use middleware
 router.route('/')
-    .get(filterSubcategoryMiddleware, getSubCategories)
-    .post(setCategoryIdToBodyMiddleware, saveSubCategoryMiddleware, storeSubCategory);
+.get(createFilterObj, getSubCategories)
+.post(setCategoryIdToBody, saveSubCategoryMiddleware, storeSubCategory);
 
 router.route('/:id/')
-    .get(showSubCategoryMiddleware, getSubCategory)
-    .put(updateSubCategoryMiddleware, updateSubCategory)
-    .delete(deleteSubCategoryMiddleware, deleteSubCategory);
+.get(showSubCategoryMiddleware, getSubCategory)
+.put(updateSubCategoryMiddleware, updateSubCategory)
+.delete(deleteSubCategoryMiddleware, deleteSubCategory);
 
 module.exports = router; // Export the router

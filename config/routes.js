@@ -1,6 +1,6 @@
 const categoryRouter = require("../modules/category/routes/categories");
 const subCategoryRouter = require("../modules/category/routes/subCategories");
-const brandsRouter = require("../modules/brands/routes/brand");
+const brandsRouter = require("../modules/brands/routes/brandRoute");
 const ApiError = require("./base/models/apiError");
 
 const initRoutes = (app) => {

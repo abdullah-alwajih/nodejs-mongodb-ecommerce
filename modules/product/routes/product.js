@@ -7,14 +7,14 @@ const {
   storeProduct,
   updateProduct,
   deleteProduct
-} = require("../controllers/product");
+} = require("../manager/controllers/product");
 
 const {
   showBrandMiddleware,
   saveBrandMiddleware,
   updateBrandMiddleware,
   deleteBrandMiddleware,
-} = require("../middlewares/product");
+} = require("./productMiddleware");
 
 
 // Define routes and use middleware

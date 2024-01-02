@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
 const dbConnection = require("./config/database");
-const globalError = require("./config/middlewares/globalError");
+const globalError = require("./config/middlewares/errorMiddleware");
 const initRoutes = require("./config/routes");
 
 const app = express();
