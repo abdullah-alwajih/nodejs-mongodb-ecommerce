@@ -1,28 +1,28 @@
-const factory = require("../../../config/base/controllers/handlersFactory");
+const controller = require("../../../config/base/controllers/controller");
 const Brand = require("../models/brand");
 
 
 // @desc    Get list of brands
 // @route   GET /api/v1/brands
 // @access  Public
-exports.getBrands = factory.index(Brand);
+exports.getBrands = controller.index(Brand);
 
 // @desc    Get specific brand by id
 // @route   GET /api/v1/brands/:id
 // @access  Public
-exports.getBrand = factory.show(Brand);
+exports.getBrand = controller.show(Brand);
 
 // @desc    Create brand
 // @route   POST  /api/v1/brands
 // @access  Private
-exports.storeBrand = factory.store(Brand);
+exports.storeBrand = controller.store(Brand);
 
 // @desc    Update specific brand
 // @route   PUT /api/v1/brands/:id
 // @access  Private
-exports.updateBrand = factory.update(Brand);
+exports.updateBrand = controller.update(Brand);
 
 // @desc    Delete specific brand
 // @route   DELETE /api/v1/brands/:id
 // @access  Private
-exports.deleteBrand = factory.delete(Brand);
+exports.deleteBrand = controller.delete(Brand);

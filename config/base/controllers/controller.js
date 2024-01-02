@@ -12,6 +12,7 @@ exports.delete = (Model) =>
     }
     res.status(204).send();
   });
+
 exports.update = (Model) =>
   asyncHandler(async (req, res, next) => {
     const document = await Model.findByIdAndUpdate(req.params.id, req.body, {
@@ -24,11 +25,13 @@ exports.update = (Model) =>
     }
     res.status(200).json({data: document});
   });
+
 exports.store = (Model) =>
   asyncHandler(async (req, res) => {
     const newDoc = await Model.create(req.body);
     res.status(201).json({data: newDoc});
   });
+
 exports.show = (Model) =>
   asyncHandler(async (req, res, next) => {
     const {id} = req.params;
@@ -38,6 +41,7 @@ exports.show = (Model) =>
     }
     res.status(200).json({data: document});
   });
+
 exports.index = (Model, searchableFields) =>
   asyncHandler(async (req, res) => {
     let filter = {};
@@ -55,7 +59,5 @@ exports.index = (Model, searchableFields) =>
     // Execute query
     const {mongooseQuery, paginationResult} = apiFeatures;
     const documents = await mongooseQuery;
-    res
-    .status(200)
-    .json({results: documents.length, paginationResult, data: documents});
+    res.status(200).json({results: documents.length, paginationResult, data: documents});
   });

@@ -1,4 +1,4 @@
-const factory = require("../../../config/base/controllers/handlersFactory");
+const controller = require("../../../config/base/controllers/controller");
 const SubCategory = require('../models/subCategory');
 
 exports.setCategoryIdToBody = (req, res, next) => {
@@ -11,7 +11,7 @@ exports.setCategoryIdToBody = (req, res, next) => {
 // GET /api/v1/categories/:categoryId/subcategories
 exports.createFilterObj = (req, res, next) => {
   let filterObject = {};
-  if (req.params.categoryId) filterObject = { category: req.params.categoryId };
+  if (req.params.categoryId) filterObject = {category: req.params.categoryId};
   req.filterObj = filterObject;
   next();
 };
@@ -19,24 +19,24 @@ exports.createFilterObj = (req, res, next) => {
 // @desc    Get list of subcategories
 // @route   GET /api/v1/subcategories
 // @access  Public
-exports.getSubCategories = factory.index(SubCategory);
+exports.getSubCategories = controller.index(SubCategory);
 
 // @desc    Get specific subcategory by id
 // @route   GET /api/v1/subcategories/:id
 // @access  Public
-exports.getSubCategory = factory.show(SubCategory);
+exports.getSubCategory = controller.show(SubCategory);
 
 // @desc    Create subCategory
 // @route   POST  /api/v1/subcategories
 // @access  Private
-exports.storeSubCategory = factory.store(SubCategory);
+exports.storeSubCategory = controller.store(SubCategory);
 
 // @desc    Update specific subcategory
 // @route   PUT /api/v1/subcategories/:id
 // @access  Private
-exports.updateSubCategory = factory.update(SubCategory);
+exports.updateSubCategory = controller.update(SubCategory);
 
 // @desc    Delete specific subCategory
 // @route   DELETE /api/v1/subcategories/:id
 // @access  Private
-exports.deleteSubCategory = factory.delete(SubCategory);
+exports.deleteSubCategory = controller.delete(SubCategory);

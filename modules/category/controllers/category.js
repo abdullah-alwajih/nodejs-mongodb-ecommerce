@@ -1,4 +1,4 @@
-const factory = require("../../../config/base/controllers/handlersFactory");
+const controller = require("../../../config/base/controllers/controller");
 
 const Category = require('../models/category');
 
@@ -7,24 +7,24 @@ const Category = require('../models/category');
 // @access  Public
 
 // Build query
-exports.getCategories = factory.index(Category);
+exports.getCategories = controller.index(Category);
 
 // @desc    Get specific category by id
 // @route   GET /api/v1/categories/:id
 // @access  Public
-exports.getCategory = factory.show(Category);
+exports.getCategory = controller.show(Category);
 
 // @desc    Create category
 // @route   POST  /api/v1/categories
 // @access  Private
-exports.storeCategory = factory.store(Category);
+exports.storeCategory = controller.store(Category);
 
 // @desc    Update specific category
 // @route   PUT /api/v1/categories/:id
 // @access  Private
-exports.updateCategory = factory.update(Category);
+exports.updateCategory = controller.update(Category);
 
 // @desc    Delete specific category
 // @route   DELETE /api/v1/categories/:id
 // @access  Private
-exports.deleteCategory = factory.delete(Category);
+exports.deleteCategory = controller.delete(Category);
