@@ -1,5 +1,5 @@
-const validatorMiddleware = require("../../../config/middlewares/validatorMiddleware");
 const {mongoIdRule, brandNameRule} = require("../manager/rules/brand");
+const {validatorMiddleware} = require("../../../config/middlewares/validatorMiddleware");
 
 
 exports.showBrandMiddleware = [

@@ -1,5 +1,5 @@
-const validatorMiddleware = require("../../../config/middlewares/validatorMiddleware");
 const {mongoIdRule, categoryNameRule} = require("../manager/rules/category");
+const {validatorMiddleware} = require("../../../config/middlewares/validatorMiddleware");
 
 
 exports.showCategoryMiddleware = [

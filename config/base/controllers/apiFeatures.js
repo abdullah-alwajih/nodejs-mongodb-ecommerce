@@ -6,7 +6,7 @@ class ApiFeatures {
 
   filter() {
     const queryStringObj = {...this.queryString};
-    const excludesFields = ['page', 'sort', 'limit', 'fields'];
+    const excludesFields = ['page', 'sort', 'limit', 'fields', 'keyword'];
     excludesFields.forEach((field) => delete queryStringObj[field]);
     // Apply filtration using [gte, gt, lte, lt]
     let queryStr = JSON.stringify(queryStringObj);
@@ -42,7 +42,7 @@ class ApiFeatures {
       let query = {};
       if (Array.isArray(searchableFields)) {
         query.$or = searchableFields.map(field => ({
-          field: {$regex: this.queryString.keyword, $options: 'i'}
+          [field]: {$regex: this.queryString.keyword, $options: 'i'}
         }));
       } else {
         query = {name: {$regex: this.queryString.keyword, $options: 'i'}};
@@ -57,7 +57,7 @@ class ApiFeatures {
     const page = this.queryString.page * 1 || 1;
     const limit = this.queryString.limit * 1 || 50;
     const skip = (page - 1) * limit;
-    const endPageNumber = page * limit;
+    const endIndex = page * limit;
 
     // Pagination result
     const pagination = {};
@@ -66,7 +66,7 @@ class ApiFeatures {
     pagination.numberOfPages = Math.ceil(countDocuments / limit);
 
     // next page
-    if (endPageNumber < countDocuments) {
+    if (endIndex < countDocuments) {
       pagination.next = page + 1;
     }
     if (skip > 0) {

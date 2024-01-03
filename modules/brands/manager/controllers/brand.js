@@ -5,7 +5,7 @@ const Brand = require("../../data/models/brand");
 // @desc    Get list of brands
 // @route   GET /api/v1/brands
 // @access  Public
-exports.getBrands = controller.index(Brand);
+exports.getBrands = controller.index(Brand, ['name', 'slug']);
 
 // @desc    Get specific brand by id
 // @route   GET /api/v1/brands/:id

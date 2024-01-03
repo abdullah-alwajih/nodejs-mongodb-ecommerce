@@ -1,6 +1,6 @@
 const {validationResult, param} = require("express-validator");
 
-exports.mongoIdRule = param('id').isMongoId().withMessage('Invalid id format');
+const mongoIdRule = param('id').isMongoId().withMessage('Invalid id format');
 
 
 const validatorMiddleware = (req, res, next) => {
@@ -9,4 +9,4 @@ const validatorMiddleware = (req, res, next) => {
   else res.status(404).send({errors: result.array()});
 }
 
-module.exports = validatorMiddleware;
+module.exports = {validatorMiddleware, mongoIdRule};

@@ -51,13 +51,15 @@ exports.index = (Model, searchableFields) =>
     // Build query
     const documentsCounts = await Model.countDocuments();
     const apiFeatures = new ApiFeatures(Model.find(filter), req.query)
-    .paginate(documentsCounts)
-    .filter()
-    .search(searchableFields)
-    .limitFields()
-    .sort();
+      .paginate(documentsCounts)
+      .filter()
+      .search(searchableFields)
+      .limitFields()
+      .sort();
+
     // Execute query
     const {mongooseQuery, paginationResult} = apiFeatures;
     const documents = await mongooseQuery;
+
     res.status(200).json({results: documents.length, paginationResult, data: documents});
   });

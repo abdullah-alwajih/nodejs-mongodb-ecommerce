@@ -1,26 +1,24 @@
-const slugify = require('slugify');
-const {check, body} = require('express-validator');
-const validatorMiddleware = require("../../../config/middlewares/validatorMiddleware");
-const {productCreateRule, productUpdateRole} = require("../manager/rules/product");
-const {mongoIdRule} = require("../../../config/middlewares/validatorMiddleware");
+const {createProductRole, updateProductRole} = require("../manager/rules/product");
+const {validatorMiddleware, mongoIdRule} = require("../../../config/middlewares/validatorMiddleware");
 
-exports.createProductValidator = [
-  productCreateRule,
-  validatorMiddleware,
-];
 
-exports.getProductValidator = [
+exports.showProductMiddleware = [
   mongoIdRule,
   validatorMiddleware,
 ];
 
-exports.updateProductValidator = [
-  mongoIdRule,
-  productUpdateRole,
+exports.saveProductMiddleware = [
+  createProductRole,
   validatorMiddleware,
 ];
 
-exports.deleteProductValidator = [
+exports.updateProductMiddleware = [
+  mongoIdRule,
+  updateProductRole,
+  validatorMiddleware,
+];
+
+exports.deleteProductMiddleware = [
   mongoIdRule,
   validatorMiddleware,
 ];
