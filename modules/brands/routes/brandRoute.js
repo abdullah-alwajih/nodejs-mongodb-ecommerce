@@ -7,7 +7,8 @@ const {
   storeBrand,
   updateBrand,
   deleteBrand,
-  uploadBrandImage
+  uploadBrandImage,
+  imageProcessorBrand
 } = require("../manager/controllers/brand");
 
 const {
@@ -21,7 +22,7 @@ const {
 // Define routes and use middleware
 router.route('/')
   .get(getBrands)
-  .post(uploadBrandImage, saveBrandMiddleware, storeBrand);
+  .post(uploadBrandImage, imageProcessorBrand, saveBrandMiddleware, storeBrand);
 
 router.route('/:id')
   .get(showBrandMiddleware, getBrand)

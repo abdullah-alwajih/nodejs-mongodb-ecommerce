@@ -1,11 +1,11 @@
 const controller = require("../../../../config/base/controllers/controller");
 const Brand = require("../../data/models/brand");
 
-const appDiskStorage = require("../../../../config/storages/appDiskStorage");
+const {imageProcessor, appDiskStorage} = require("../../../../config/storages/appDiskStorage");
 
-const upload = appDiskStorage('brands')
+exports.imageProcessorBrand = imageProcessor('brands')
 
-exports.uploadBrandImage = upload.single('image')
+exports.uploadBrandImage = appDiskStorage.single('image')
 // @desc    Get list of brands
 // @route   GET /api/v1/brands
 // @access  Public
