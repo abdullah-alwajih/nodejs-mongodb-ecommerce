@@ -6,7 +6,8 @@ const {
   getBrand,
   storeBrand,
   updateBrand,
-  deleteBrand
+  deleteBrand,
+  uploadBrandImage
 } = require("../manager/controllers/brand");
 
 const {
@@ -19,12 +20,12 @@ const {
 
 // Define routes and use middleware
 router.route('/')
-.get(getBrands)
-.post(saveBrandMiddleware, storeBrand);
+  .get(getBrands)
+  .post(uploadBrandImage, saveBrandMiddleware, storeBrand);
 
 router.route('/:id')
-.get(showBrandMiddleware, getBrand)
-.put(updateBrandMiddleware, updateBrand)
-.delete(deleteBrandMiddleware, deleteBrand);
+  .get(showBrandMiddleware, getBrand)
+  .put(updateBrandMiddleware, updateBrand)
+  .delete(deleteBrandMiddleware, deleteBrand);
 
 module.exports = router; // Export the router

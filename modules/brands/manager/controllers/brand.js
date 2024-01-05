@@ -1,7 +1,11 @@
 const controller = require("../../../../config/base/controllers/controller");
 const Brand = require("../../data/models/brand");
 
+const appDiskStorage = require("../../../../config/storages/appDiskStorage");
 
+const upload = appDiskStorage('brands')
+
+exports.uploadBrandImage = upload.single('image')
 // @desc    Get list of brands
 // @route   GET /api/v1/brands
 // @access  Public
