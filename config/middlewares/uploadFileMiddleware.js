@@ -30,10 +30,10 @@ const fileFilter = function (req, file, cb) {
   }
 }
 
-const imageProcessor = (filePath) => asyncHandler(async (req, res, next) => {
+const imageProcessor = (filePath, fieldName) => asyncHandler(async (req, res, next) => {
   const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-  req.body.image = filePath + '-' + path.parse(req.file.originalname).name.replaceAll(' ', '-') + '-' + uniqueSuffix + '.jpeg';
-  await sharp(req.file.buffer).resize(600, 600).jpeg({quality: 90}).toFile(`uploads/${filePath}/${req.body.image}`)
+  req.body[fieldName] = filePath + '-' + path.parse(req.file.originalname).name.replaceAll(' ', '-') + '-' + uniqueSuffix + '.jpeg';
+  await sharp(req.file.buffer).resize(600, 600).jpeg({quality: 90}).toFile(`uploads/${filePath}/${req.body[fieldName]}`)
   next()
 })
 const upload = multer({storage: storage, fileFilter: fileFilter})
@@ -42,7 +42,7 @@ const upload = multer({storage: storage, fileFilter: fileFilter})
 function uploadSingleImage(filePath, fieldName = 'image') {
   return [
     upload.single(fieldName),
-    imageProcessor(filePath)
+    imageProcessor(filePath, fieldName)
   ];
 }
 
