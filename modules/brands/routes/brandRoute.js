@@ -6,8 +6,7 @@ const {
   getBrand,
   storeBrand,
   updateBrand,
-  deleteBrand,
-  uploadBrandImage, imageProcessorBrand
+  deleteBrand
 } = require("../manager/controllers/brand");
 
 const {
