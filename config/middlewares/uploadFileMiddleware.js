@@ -36,6 +36,14 @@ const imageProcessor = (filePath) => asyncHandler(async (req, res, next) => {
   await sharp(req.file.buffer).resize(600, 600).jpeg({quality: 90}).toFile(`uploads/${filePath}/${fileName}`)
   next()
 })
-const appDiskStorage = multer({storage: storage, fileFilter: fileFilter})
+const upload = multer({storage: storage, fileFilter: fileFilter})
 
-module.exports = {appDiskStorage, imageProcessor}
+
+function uploadSingleImage(filePath, fieldName = 'image') {
+  return [
+    upload.single(fieldName),
+    imageProcessor(filePath)
+  ];
+}
+
+module.exports = {uploadSingleImage}

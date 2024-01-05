@@ -1,11 +1,9 @@
 const {mongoIdRule, brandNameRule} = require("../manager/rules/brand");
 const {validatorMiddleware} = require("../../../config/middlewares/validatorMiddleware");
-const {imageProcessor, appDiskStorage} = require("../../../config/storages/appDiskStorage");
+const {uploadSingleImage} = require("../../../config/middlewares/uploadFileMiddleware");
 
 
-const imageProcessorBrand = imageProcessor('brands')
-
-const uploadBrandImage = appDiskStorage.single('image')
+const uploadBrandImage = uploadSingleImage('brands')
 
 exports.showBrandMiddleware = [
   mongoIdRule,
@@ -14,7 +12,6 @@ exports.showBrandMiddleware = [
 
 exports.saveBrandMiddleware = [
   uploadBrandImage,
-  imageProcessorBrand,
   brandNameRule,
   validatorMiddleware,
 ];
