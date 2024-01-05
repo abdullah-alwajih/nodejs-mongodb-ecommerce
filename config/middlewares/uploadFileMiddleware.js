@@ -32,8 +32,8 @@ const fileFilter = function (req, file, cb) {
 
 const imageProcessor = (filePath) => asyncHandler(async (req, res, next) => {
   const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-  const fileName = filePath + '-' + path.parse(req.file.originalname).name + '-' + uniqueSuffix + '.jpeg';
-  await sharp(req.file.buffer).resize(600, 600).jpeg({quality: 90}).toFile(`uploads/${filePath}/${fileName}`)
+  req.body.image = filePath + '-' + path.parse(req.file.originalname).name.replaceAll(' ', '-') + '-' + uniqueSuffix + '.jpeg';
+  await sharp(req.file.buffer).resize(600, 600).jpeg({quality: 90}).toFile(`uploads/${filePath}/${req.body.image}`)
   next()
 })
 const upload = multer({storage: storage, fileFilter: fileFilter})

@@ -10,6 +10,7 @@ const globalError = require("./config/middlewares/errorMiddleware");
 const initRoutes = require("./config/routes");
 
 const app = express();
+app.use(express.static(path.join(__dirname, 'uploads')));
 
 dbConnection();
 
