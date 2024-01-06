@@ -14,7 +14,7 @@ const {
   saveBrandMiddleware,
   updateBrandMiddleware,
   deleteBrandMiddleware,
-} = require("./brandMiddleware");
+} = require("./userMiddleware");
 
 
 // Define routes and use middleware
