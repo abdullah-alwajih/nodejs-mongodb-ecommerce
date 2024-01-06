@@ -1,50 +1,28 @@
-const multer = require("multer");
-const ApiError = require("../base/models/apiError");
-const path = require('path');
 const asyncHandler = require('express-async-handler');
-const sharp = require("sharp");
+const imageProcessor = require("../utils/imageProcessing");
+const upload = require("../utils/fileUpload");
 
-// const diskStorage = (filePath) => multer.diskStorage({
-//   destination: function (req, file, cb) {
-//     cb(null, `uploads/${filePath}/`)
-//   },
-//   filename: function (req, file, cb) {
-//     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-//     cb(null, filePath + '-' + path.parse(file.originalname).name + '-' + uniqueSuffix + path.extname(file.originalname))
-//   }
-// })
-
-const storage = multer.memoryStorage()
-
-const fileFilter = function (req, file, cb) {
-  // The function should call `cb` with a boolean
-  // to indicate if the file should be accepted
-  if (file.mimetype.startsWith('image')) {
-    // To accept the file pass `true`, like so:
-    cb(null, true)
-  } else {
-    // // To reject this file pass `false`, like so:
-    // cb(null, false)
-    // You can always pass an error if something goes wrong:
-    cb(new ApiError(400, 'Only Images allowed'), false)
-  }
-}
-
-const imageProcessor = (filePath, fieldName) => asyncHandler(async (req, res, next) => {
-  const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-  const fileName = filePath + '-' + path.parse(req.file.originalname).name.replaceAll(' ', '-') + '-' + uniqueSuffix + '.jpeg';
-  await sharp(req.file.buffer).resize(600, 600).jpeg({quality: 90}).toFile(`uploads/${filePath}/${fileName}`);
-  req.body[fieldName] = fileName;
+const uploadFile = (filePath, fieldName) => asyncHandler(async (req, res, next) => {
+  req.body[fieldName] = await imageProcessor(req.file, filePath);
   next()
 })
-const upload = multer({storage: storage, fileFilter: fileFilter})
 
+const uploadFiles = (filePath, fields) => asyncHandler(async (req, res, next) => {
+  for (const field of fields) {
+    const files = req.files[field.name];
+    req.body[field.name] = await imageProcessor(field.maxCount === 1 ? files[0] : files, filePath);
+  }
+  next()
+})
 
-function uploadSingleImage(filePath, fieldName = 'image') {
-  return [
-    upload.single(fieldName),
-    imageProcessor(filePath, fieldName)
-  ];
-}
+const uploadSingle = (filePath, fieldName = 'image') => [
+  upload.single(fieldName),
+  uploadFile(filePath, fieldName)
+];
 
-module.exports = {uploadSingleImage}
+const uploadFields = (filePath, fields) => [
+  upload.fields(fields),
+  uploadFiles(filePath, fields)
+];
+
+module.exports = {uploadSingle, uploadFields}

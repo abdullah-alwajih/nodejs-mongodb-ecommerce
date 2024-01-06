@@ -1,8 +1,8 @@
 const {mongoIdRule, categoryNameRule} = require("../manager/rules/category");
 const {validatorMiddleware} = require("../../../config/middlewares/validatorMiddleware");
-const {uploadSingleImage} = require("../../../config/middlewares/uploadFileMiddleware");
+const {uploadSingle} = require("../../../config/middlewares/uploadFileMiddleware");
 
-const uploadImage = uploadSingleImage('categories')
+const uploadImage = uploadSingle('categories')
 
 exports.showCategoryMiddleware = [
   mongoIdRule,

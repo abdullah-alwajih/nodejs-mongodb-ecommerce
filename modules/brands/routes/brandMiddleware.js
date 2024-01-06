@@ -1,9 +1,9 @@
 const {mongoIdRule, brandNameRule} = require("../manager/rules/brand");
 const {validatorMiddleware} = require("../../../config/middlewares/validatorMiddleware");
-const {uploadSingleImage} = require("../../../config/middlewares/uploadFileMiddleware");
+const {uploadSingle} = require("../../../config/middlewares/uploadFileMiddleware");
 
 
-const uploadBrandImage = uploadSingleImage('brands')
+const uploadBrandImage = uploadSingle('brands')
 
 exports.showBrandMiddleware = [
   mongoIdRule,
