@@ -1,4 +1,4 @@
-const controller = require("../../../../config/base/controllers/controller");
+const controller = require("../../../../core/base/controllers/controller");
 const SubCategory = require('../../data/models/subCategory');
 
 exports.setCategoryIdToBody = (req, res, next) => {

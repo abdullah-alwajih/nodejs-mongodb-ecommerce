@@ -1,6 +1,6 @@
 const {mongoIdRule, brandNameRule} = require("../manager/rules/brand");
-const {validatorMiddleware} = require("../../../config/middlewares/validatorMiddleware");
-const {uploadSingle} = require("../../../config/middlewares/uploadFileMiddleware");
+const {validatorMiddleware} = require("../../../core/middlewares/validatorMiddleware");
+const {uploadSingle} = require("../../../core/middlewares/uploadFileMiddleware");
 
 
 const uploadBrandImage = uploadSingle('brands')

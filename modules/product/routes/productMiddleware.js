@@ -1,6 +1,6 @@
 const {createProductRole, updateProductRole} = require("../manager/rules/product");
-const {validatorMiddleware, mongoIdRule} = require("../../../config/middlewares/validatorMiddleware");
-const {uploadFields} = require("../../../config/middlewares/uploadFileMiddleware");
+const {validatorMiddleware, mongoIdRule} = require("../../../core/middlewares/validatorMiddleware");
+const {uploadFields} = require("../../../core/middlewares/uploadFileMiddleware");
 
 const fields = [
   {name: 'imageCover', maxCount: 1},

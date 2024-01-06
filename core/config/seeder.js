@@ -1,16 +1,16 @@
 const fs = require('fs');
 require('colors');
 const dotenv = require('dotenv');
-const Product = require('../../models/productModel');
-const dbConnection = require('../../config/database');
+const Product = require('/modules/product/data/models/product');
+const dbConnection = require('./database');
 
-dotenv.config({path: '../../config.env'});
+dotenv.config({path: '../../core.env'});
 
 // connect to DB
 dbConnection();
 
 // Read data
-const products = JSON.parse(fs.readFileSync('./products.json'));
+const products = JSON.parse(fs.readFileSync('/modules/product/data/dummy/products.json'));
 
 
 // Insert data into DB

@@ -1,5 +1,5 @@
 const {subCategoryIdRule, subCategoryNameRule, categoryIdRule} = require("../manager/rules/subCategory");
-const {validatorMiddleware} = require("../../../config/middlewares/validatorMiddleware");
+const {validatorMiddleware} = require("../../../core/middlewares/validatorMiddleware");
 
 
 exports.showSubCategoryMiddleware = [

@@ -1,4 +1,4 @@
-const controller = require("../../../../config/base/controllers/controller");
+const controller = require("../../../../core/base/controllers/controller");
 const Product = require("../../data/models/product");
 
 // @desc    Get list of products

@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "node config/www",
-    "start:dev": "nodemon config/www",
-    "start:prod": "NODE_ENV=production node config/www"
+    "start": "node core/config/www",
+    "start:dev": "nodemon core/config/www",
+    "start:prod": "NODE_ENV=production node core/config/www"
   },
   "dependencies": {
     "@img/sharp-linux-x64": "^0.33.1",

@@ -1,8 +1,8 @@
-const categoryRoute = require("../modules/category/routes/categories");
-const subCategoryRoute = require("../modules/category/routes/subCategories");
-const brandRoute = require("../modules/brands/routes/brandRoute");
-const productRoute = require("../modules/product/routes/productRoute");
-const ApiError = require("./base/models/apiError");
+const categoryRoute = require("../../modules/category/routes/categories");
+const subCategoryRoute = require("../../modules/category/routes/subCategories");
+const brandRoute = require("../../modules/brands/routes/brandRoute");
+const productRoute = require("../../modules/product/routes/productRoute");
+const ApiError = require("../base/models/apiError");
 
 const initRoutes = (app) => {
   app.use('/api/v1/categories', categoryRoute);

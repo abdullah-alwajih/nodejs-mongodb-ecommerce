@@ -5,9 +5,9 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
-const dbConnection = require("./config/database");
-const globalError = require("./config/middlewares/errorMiddleware");
-const initRoutes = require("./config/routes");
+const dbConnection = require("./core/config/database");
+const globalError = require("./core/middlewares/errorMiddleware");
+const initRoutes = require("./core/config/routes");
 
 const app = express();
 app.use(express.static(path.join(__dirname, 'uploads')));
