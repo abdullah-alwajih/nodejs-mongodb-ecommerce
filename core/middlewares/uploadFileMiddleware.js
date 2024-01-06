@@ -3,14 +3,17 @@ const imageProcessor = require("../utils/imageProcessing");
 const upload = require("../utils/fileUpload");
 
 const uploadFile = (filePath, fieldName) => asyncHandler(async (req, res, next) => {
-  req.body[fieldName] = await imageProcessor(req.file, filePath);
+  const {file} = req.file;
+  if (file) req.body[fieldName] = await imageProcessor(file, filePath);
   next()
 })
 
 const uploadFiles = (filePath, fields) => asyncHandler(async (req, res, next) => {
   for (const field of fields) {
     const files = req.files[field.name];
-    req.body[field.name] = await imageProcessor(field.maxCount === 1 ? files[0] : files, filePath);
+    if (files && files.length > 0) {
+      req.body[field.name] = await imageProcessor(field.maxCount === 1 ? files[0] : files, filePath);
+    }
   }
   next()
 })
