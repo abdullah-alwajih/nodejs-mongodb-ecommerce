@@ -26,14 +26,9 @@ initRoutes(app);
 app.use(globalError);
 
 
-// Handle rejection outside express
-process.on('unhandledRejection', (err) => {
-  console.error(`UnhandledRejection Errors: ${err.name} | ${err.message}`);
-  server.close(() => {
-    console.error(`Shutting down....`);
-    process.exit(1);
-  });
+// Handle Rejection outside express
+process.on("unhandledRejection", (err) => {
+  console.log(`UnhandledRejection error ${err.name} | ${err.message}`);
 });
-
 
 module.exports = app;
