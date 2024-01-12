@@ -17,17 +17,18 @@ const {
   deleteCategoryMiddleware,
 } = require("./categoryMiddleware");
 
-const subCategoryRoute = require("./subCategories"); // Import subCategoryRoute
+const subCategoryRoute = require("./subCategoriesRoute");
+const {authenticated, authorized} = require("../../../core/middlewares/authMiddleware"); // Import subCategoryRoute
 
 // Define routes and use middleware
 router.route('/')
-.get(getCategories)
-.post(saveCategoryMiddleware, storeCategory);
+  .get(getCategories)
+  .post(authenticated, authorized('admin', 'manager'), saveCategoryMiddleware, storeCategory);
 
 router.route('/:id/')
-.get(showCategoryMiddleware, getCategory)
-.put(updateCategoryMiddleware, updateCategory)
-.delete(deleteCategoryMiddleware, deleteCategory);
+  .get(showCategoryMiddleware, getCategory)
+  .put(authenticated, authorized('admin', 'manager'), updateCategoryMiddleware, updateCategory)
+  .delete(authenticated, authorized('admin'), deleteCategoryMiddleware, deleteCategory);
 
 router.use('/:categoryId/subcategories/', subCategoryRoute); // Use subCategoryRoute
 

@@ -1,30 +1,54 @@
 const express = require('express');
-const router = express.Router(); // Initialize router
+const {authenticated, authorized} = require("../../../core/middlewares/authMiddleware");
+
+
+const {
+  getUserValidator,
+  createUserValidator,
+  updateUserValidator,
+  deleteUserValidator,
+  changeUserPasswordValidator,
+  updateLoggedUserValidator,
+} = require('./userMiddleware');
 
 const {
   getUsers,
   getUser,
   storeUser,
   updateUser,
-  deleteUser
-} = require("../manager/controllers/userController");
-
-const {
-  showBrandMiddleware,
-  saveBrandMiddleware,
-  updateBrandMiddleware,
-  deleteBrandMiddleware,
-} = require("./userMiddleware");
+  deleteUser,
+  changeUserPassword,
+  getLoggedUserData,
+  updateLoggedUserPassword,
+  updateLoggedUserData,
+  deleteLoggedUserData,
+} = require('../manager/controllers/userController');
 
 
-// Define routes and use middleware
-router.route('/')
+const router = express.Router();
+
+router.use(authenticated);
+
+router.get('/getMe', getLoggedUserData, getUser);
+router.put('/changeMyPassword', updateLoggedUserPassword);
+router.put('/updateMe', updateLoggedUserValidator, updateLoggedUserData);
+router.delete('/deleteMe', deleteLoggedUserData);
+
+// Admin
+router.use(authorized('admin', 'manager'));
+router.put(
+  '/changePassword/:id',
+  changeUserPasswordValidator,
+  changeUserPassword
+);
+router
+  .route('/')
   .get(getUsers)
-  .post(saveBrandMiddleware, storeUser);
+  .post(createUserValidator, storeUser);
+router
+  .route('/:id')
+  .get(getUserValidator, getUser)
+  .put(updateUserValidator, updateUser)
+  .delete(deleteUserValidator, deleteUser);
 
-router.route('/:id')
-  .get(showBrandMiddleware, getUser)
-  .put(updateBrandMiddleware, updateUser)
-  .delete(deleteBrandMiddleware, deleteUser);
-
-module.exports = router; // Export the router
+module.exports = router;

@@ -1,7 +1,6 @@
-const {mongoIdRule, brandNameRule} = require("../manager/rules/brand");
+const {mongoIdRule, brandNameRule} = require("../manager/validators/brand");
 const {validatorMiddleware} = require("../../../core/middlewares/validatorMiddleware");
 const {uploadSingle} = require("../../../core/middlewares/uploadFileMiddleware");
-
 
 const uploadBrandImage = uploadSingle('brands')
 
@@ -18,6 +17,7 @@ exports.saveBrandMiddleware = [
 
 exports.updateBrandMiddleware = [
   mongoIdRule,
+  uploadBrandImage,
   brandNameRule,
   validatorMiddleware,
 ];

@@ -1,4 +1,4 @@
-const {mongoIdRule, categoryNameRule} = require("../manager/rules/category");
+const {mongoIdRule, categoryNameRule} = require("../manager/validators/category");
 const {validatorMiddleware} = require("../../../core/middlewares/validatorMiddleware");
 const {uploadSingle} = require("../../../core/middlewares/uploadFileMiddleware");
 

@@ -2,6 +2,11 @@ const express = require('express');
 const router = express.Router(); // Initialize router
 
 const {
+  authenticated,
+  authorized
+} = require("../../../core/middlewares/authMiddleware");
+
+const {
   getProducts,
   getProduct,
   storeProduct,
@@ -20,11 +25,11 @@ const {
 // Define routes and use middleware
 router.route('/')
   .get(getProducts)
-  .post(saveProductMiddleware, storeProduct);
+  .post(authenticated, authorized('admin', 'manager'), saveProductMiddleware, storeProduct);
 
 router.route('/:id')
   .get(showProductMiddleware, getProduct)
-  .put(updateProductMiddleware, updateProduct)
-  .delete(deleteProductMiddleware, deleteProduct);
+  .put(authenticated, authorized('admin', 'manager'), updateProductMiddleware, updateProduct)
+  .delete(authenticated, authorized('admin'), deleteProductMiddleware, deleteProduct);
 
 module.exports = router; // Export the router

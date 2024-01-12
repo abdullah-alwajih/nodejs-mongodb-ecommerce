@@ -1,6 +1,6 @@
 const slugify = require('slugify');
 const bcrypt = require('bcryptjs');
-const {body, param} = require('express-validator');
+const {body, param, check} = require('express-validator');
 const User = require('../../data/models/userModel');
 
 
@@ -14,7 +14,7 @@ exports.roleUserName = body('name')
   .custom((val, {req}) => {
     req.body.slug = slugify(val);
     return true;
-  });
+  })
 
 exports.roleUserEmail = body('email')
   .notEmpty()
@@ -29,21 +29,45 @@ exports.roleUserEmail = body('email')
     })
   )
 
+
+exports.roleUserEmailLogin = check('email')
+  .notEmpty()
+  .withMessage('Email required')
+  .isEmail()
+  .withMessage('Invalid email address')
+
+
 exports.roleUserPassword = body('password')
   .notEmpty()
   .withMessage('Password required')
   .isLength({min: 6})
   .withMessage('Password must be at least 6 characters')
-  .custom((password, {req}) => {
-    if (password !== req.body.passwordConfirm) {
+
+exports.roleUserPasswordConfirm = body('passwordConfirm')
+  .notEmpty().withMessage('Password confirmation required')
+  .custom((passwordConfirm, {req}) => {
+    if (passwordConfirm !== req.body.password) {
       throw new Error('Password Confirmation incorrect');
     }
     return true;
   })
 
-exports.roleUserPasswordConfirm = body('passwordConfirm')
+exports.roleUserCurrentPassword = body('currentPassword')
   .notEmpty()
-  .withMessage('Password confirmation required')
+  .withMessage('You must enter your current password')
+  .custom(async (val, {req}) => {
+    // 1) Verify current password
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      throw new Error('There is no user for this id');
+    }
+    const isCorrectPassword = await bcrypt.compare(req.body.currentPassword, user.password);
+    if (!isCorrectPassword) {
+      throw new Error('Incorrect current password');
+    }
+    return true;
+  })
+
 
 exports.roleUserPhone = body('phone')
   .optional()

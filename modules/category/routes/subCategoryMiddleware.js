@@ -1,4 +1,4 @@
-const {subCategoryIdRule, subCategoryNameRule, categoryIdRule} = require("../manager/rules/subCategory");
+const {subCategoryIdRule, subCategoryNameRule, categoryIdRule} = require("../manager/validators/subCategory");
 const {validatorMiddleware} = require("../../../core/middlewares/validatorMiddleware");
 
 

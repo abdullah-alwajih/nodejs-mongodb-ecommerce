@@ -1,4 +1,4 @@
-const {createProductRole, updateProductRole} = require("../manager/rules/product");
+const {createProductRole, updateProductRole} = require("../manager/validators/product");
 const {validatorMiddleware, mongoIdRule} = require("../../../core/middlewares/validatorMiddleware");
 const {uploadFields} = require("../../../core/middlewares/uploadFileMiddleware");
 

@@ -1,15 +1,6 @@
 const mongoose = require('mongoose');
 const productSchema = require("../schema/productSchema");
 
-const setImageURL = (doc) => {
-  if (doc.imageCover) doc.imageCover = `${process.env.BASE_URL}/products/${doc.imageCover}`;
-  if (doc.images) {
-    const imagesList = [];
-    doc.images.forEach((image) => imagesList.push(`${process.env.BASE_URL}/products/${image}`));
-    doc.images = imagesList;
-  }
-};
-
 // Mongoose query middleware
 productSchema.pre(/^find/, function (next) {
   this.populate({
@@ -18,6 +9,16 @@ productSchema.pre(/^find/, function (next) {
   });
   next();
 });
+
+const setImageURL = (doc) => {
+  const path = `${process.env.BASE_URL}/products/`;
+  if (doc.imageCover) doc.imageCover = `${path}${doc.imageCover}`;
+  if (doc.images) {
+    const imagesList = [];
+    doc.images.forEach((image) => imagesList.push(`${path}${image}`));
+    doc.images = imagesList;
+  }
+};
 
 // findOne, findAll and update
 productSchema.post('init', setImageURL);

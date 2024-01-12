@@ -6,17 +6,33 @@ const {
   roleUserPassword,
   roleUserPasswordConfirm,
   roleUserProfileImg,
-  roleUserRole,
-} = require("../manager/rules/user");
+  roleUserRole, roleUserEmailLogin, roleUserCurrentPassword,
+} = require("../manager/validators/user");
+
 const {validatorMiddleware} = require("../../../core/middlewares/validatorMiddleware");
 const {uploadSingle} = require("../../../core/middlewares/uploadFileMiddleware");
-const {body} = require("express-validator");
+const {body, check} = require("express-validator");
 const User = require("../data/models/userModel");
 const bcrypt = require("bcryptjs");
 const slugify = require("slugify");
 
 
 const uploadUserImage = uploadSingle('users')
+
+exports.signupValidator = [
+  roleUserName,
+  roleUserEmail,
+  roleUserPassword,
+  roleUserPasswordConfirm,
+  validatorMiddleware,
+];
+
+exports.loginValidator = [
+  roleUserEmailLogin,
+  roleUserPassword,
+  validatorMiddleware,
+];
+
 
 exports.showUserMiddleware = [
   mongoIdRule,
@@ -35,7 +51,7 @@ exports.saveUserMiddleware = [
   validatorMiddleware,
 ];
 
-exports.updateBrandMiddleware = [
+exports.updateUserMiddleware = [
   mongoIdRule,
   roleUserName,
   roleUserEmail,
@@ -45,7 +61,7 @@ exports.updateBrandMiddleware = [
   roleUserRole,
   validatorMiddleware,
 ];
-exports.deleteBrandMiddleware = [
+exports.deleteUserMiddleware = [
   mongoIdRule,
   validatorMiddleware,
 ];
@@ -53,35 +69,9 @@ exports.deleteBrandMiddleware = [
 
 exports.changeUserPasswordValidator = [
   mongoIdRule,
-  body('currentPassword')
-    .notEmpty()
-    .withMessage('You must enter your current password'),
-  body('passwordConfirm')
-    .notEmpty()
-    .withMessage('You must enter the password confirm'),
-  body('password')
-    .notEmpty()
-    .withMessage('You must enter new password')
-    .custom(async (val, {req}) => {
-      // 1) Verify current password
-      const user = await User.findById(req.params.id);
-      if (!user) {
-        throw new Error('There is no user for this id');
-      }
-      const isCorrectPassword = await bcrypt.compare(
-        req.body.currentPassword,
-        user.password
-      );
-      if (!isCorrectPassword) {
-        throw new Error('Incorrect current password');
-      }
-
-      // 2) Verify password confirm
-      if (val !== req.body.passwordConfirm) {
-        throw new Error('Password Confirmation incorrect');
-      }
-      return true;
-    }),
+  roleUserPassword,
+  roleUserPasswordConfirm,
+  roleUserCurrentPassword,
   validatorMiddleware,
 ];
 
@@ -90,5 +80,88 @@ exports.updateLoggedUserValidator = [
   roleUserName,
   roleUserEmail,
   roleUserPhone,
+  validatorMiddleware,
+];
+
+
+exports.createUserValidator = [
+  uploadUserImage,
+  roleUserName,
+  roleUserEmail,
+  roleUserPassword,
+  roleUserPasswordConfirm,
+  roleUserPhone,
+  roleUserProfileImg,
+  roleUserRole,
+  validatorMiddleware,
+];
+
+exports.getUserValidator = [
+  check('id').isMongoId().withMessage('Invalid User id format'),
+  validatorMiddleware,
+];
+
+exports.updateUserValidator = [
+  check('id').isMongoId().withMessage('Invalid User id format'),
+  uploadUserImage,
+
+  body('name')
+    .optional()
+    .custom((val, {req}) => {
+      req.body.slug = slugify(val);
+      return true;
+    }),
+  check('email')
+    .notEmpty()
+    .withMessage('Email required')
+    .isEmail()
+    .withMessage('Invalid email address')
+    .custom((val) =>
+      User.findOne({email: val}).then((user) => {
+        if (user) {
+          return Promise.reject(new Error('E-mail already in user'));
+        }
+      })
+    ),
+  check('phone')
+    .optional()
+    .isMobilePhone(['ar-EG', 'ar-SA'])
+    .withMessage('Invalid phone number only accepted Egy and SA Phone numbers'),
+
+  check('profileImg').optional(),
+  check('role').optional(),
+  validatorMiddleware,
+];
+
+
+exports.deleteUserValidator = [
+  check('id').isMongoId().withMessage('Invalid User id format'),
+  validatorMiddleware,
+];
+
+exports.updateLoggedUserValidator = [
+  body('name')
+    .optional()
+    .custom((val, {req}) => {
+      req.body.slug = slugify(val);
+      return true;
+    }),
+  check('email')
+    .notEmpty()
+    .withMessage('Email required')
+    .isEmail()
+    .withMessage('Invalid email address')
+    .custom((val) =>
+      User.findOne({email: val}).then((user) => {
+        if (user) {
+          return Promise.reject(new Error('E-mail already in user'));
+        }
+      })
+    ),
+  check('phone')
+    .optional()
+    .isMobilePhone(['ar-EG', 'ar-SA'])
+    .withMessage('Invalid phone number only accepted Egy and SA Phone numbers'),
+
   validatorMiddleware,
 ];
