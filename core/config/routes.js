@@ -14,7 +14,7 @@ const initRoutes = (app) => {
   app.use('/api/v1/brands', brandRoute);
   app.use('/api/v1/products', productRoute);
   app.use('/api/v1/users', userRoute);
-
+  app.use('/', categoryRoute);
   app.all('*', (req, res, next) => next(new ApiError(400, `Can't find this route: ${req.originalUrl}`)));
 }
 
