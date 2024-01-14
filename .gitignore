@@ -131,4 +131,7 @@ dist
 
 #
 *.env
-uploads/
+uploads/brands/*.jpeg
+uploads/products/*.jpeg
+uploads/users/*.jpeg
+
