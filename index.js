@@ -9,21 +9,21 @@ const dbConnection = require("./core/config/database");
 const globalError = require("./core/middlewares/errorMiddleware");
 const initRoutes = require("./core/config/routes");
 
-const app = express();
-app.use(express.static(path.join(__dirname, 'uploads')));
+const index = express();
+index.use(express.static(path.join(__dirname, 'uploads')));
 
 dbConnection();
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({extended: false}));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+index.use(logger('dev'));
+index.use(express.json());
+index.use(express.urlencoded({extended: false}));
+index.use(cookieParser());
+index.use(express.static(path.join(__dirname, 'public')));
 
-initRoutes(app);
+initRoutes(index);
 
 
-app.use(globalError);
+index.use(globalError);
 
 
 // Handle Rejection outside express
@@ -31,4 +31,4 @@ process.on("unhandledRejection", (err) => {
   console.log(`UnhandledRejection error ${err.name} | ${err.message}`);
 });
 
-module.exports = app;
+module.exports = index;
