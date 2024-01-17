@@ -3,19 +3,23 @@ const subCategoryRoute = require("../../modules/category/routes/subCategoriesRou
 const brandRoute = require("../../modules/brands/routes/brandRoute");
 const productRoute = require("../../modules/product/routes/productRoute");
 const userRoute = require("../../modules/users/routes/userRoute");
+const addressRoute = require("../../modules/users/routes/addressRoute");
+const wishlistRoute = require("../../modules/users/routes/wishlistRoute");
+const reviewRoute = require("../../modules/reviews/routes/reviewRoute");
 const authRoute = require("../../modules/users/routes/authRoute");
 const ApiError = require("../base/models/apiError");
 
 const initRoutes = (app) => {
   app.use('/api/v1/auth', authRoute);
-
+  app.use('/api/v1/users', userRoute);
   app.use('/api/v1/categories', categoryRoute);
   app.use('/api/v1/subcategories', subCategoryRoute);
   app.use('/api/v1/brands', brandRoute);
   app.use('/api/v1/products', productRoute);
-  app.use('/api/v1/users', userRoute);
-  app.use('/', categoryRoute);
-  app.all('*', (req, res, next) => next(new ApiError(400, `Can't find this route: ${req.originalUrl}`)));
+  app.use('/api/v1/reviews', reviewRoute);
+  app.use('/api/v1/wishlist', wishlistRoute);
+  app.use('/api/v1/addresses', addressRoute);
+  app.all('*', (req, res, next) => next(new ApiError(404, `Can't find this route: ${req.originalUrl}`)));
 }
 
 module.exports = initRoutes;
