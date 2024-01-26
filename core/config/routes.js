@@ -19,7 +19,8 @@ const initRoutes = (app) => {
   app.use('/api/v1/reviews', reviewRoute);
   app.use('/api/v1/wishlist', wishlistRoute);
   app.use('/api/v1/addresses', addressRoute);
-  app.all('*', (req, res, next) => next(new ApiError(404, `Can't find this route: ${req.originalUrl}`)));
+  app.get('/', (req, res) => res.status(200).send('API is running successfully.'));
+  app.all('*', (req, res, next) => res.status(404).send(`Can't find this route: ${req.originalUrl}`));
 }
 
 module.exports = initRoutes;
