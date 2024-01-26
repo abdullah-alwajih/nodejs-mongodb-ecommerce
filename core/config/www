@@ -3,7 +3,7 @@
 /**
  * Module dependencies.
  */
-const app = require('../../index');
+const app = require('../../api');
 const debug = require('debug')('nodejs-mongodb-ecommerce:server');
 const http = require('http');
 
