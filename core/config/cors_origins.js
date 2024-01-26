@@ -2,7 +2,7 @@ const cors = require('cors')
 const ApiError = require("../base/models/apiError");
 
 const initCROSOrigins = (app) => {
-  const whitelist = ['https://api-ecommerce-abdullah.vercel.app', 'https://ecommerce-qbm9txq4u-abdullahalwajih.vercel.app/\n']
+  const whitelist = ['https://api-ecommerce-abdullah.vercel.app', 'https://ecommerce-git-main-abdullahalwajih.vercel.app', 'https://ecommerce-qbm9txq4u-abdullahalwajih.vercel.app']
   const corsOptions = {
     origin: function (origin, callback) {
       if (whitelist.indexOf(origin) !== -1 || !origin) {

@@ -13,7 +13,7 @@ const initRoutes = (app) => {
   app.use('/api/v1/auth', authRoute);
   app.use('/api/v1/users', userRoute);
   app.use('/api/v1/categories', categoryRoute);
-  app.use('/', categoryRoute);
+  app.use('', categoryRoute);
   app.use('/api/v1/subcategories', subCategoryRoute);
   app.use('/api/v1/brands', brandRoute);
   app.use('/api/v1/products', productRoute);
