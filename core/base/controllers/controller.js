@@ -8,7 +8,7 @@ exports.delete = (Model) =>
     const {id} = req.params;
     const document = await Model.findByIdAndDelete(id);
     if (!document) {
-      return next(new ApiError(`No document for this id ${id}`, 404));
+      return next(new ApiError(404, `No document for this id ${id}`));
     }
 
     // Trigger "remove" event when update document
@@ -24,7 +24,7 @@ exports.update = (Model) =>
     });
     if (!document) {
       return next(
-        new ApiError(`No document for this id ${req.params.id}`, 404)
+        new ApiError(404, `No document for this id ${req.params.id}`,)
       );
     }
 
@@ -53,7 +53,7 @@ exports.show = (Model, populateOptions) =>
     const document = await query;
 
     if (!document) {
-      return next(new ApiError(`No document for this id ${id}`, 404));
+      return next(new ApiError(404, `No document for this id ${id}`,));
     }
     res.status(200).json({data: document});
   });

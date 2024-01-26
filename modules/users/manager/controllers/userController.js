@@ -39,7 +39,7 @@ exports.updateUser = asyncHandler(async (req, res, next) => {
   );
 
   if (!document) {
-    return next(new ApiError(`No document for this id ${req.params.id}`, 404));
+    return next(new ApiError(404, `No document for this id ${req.params.id}`,));
   }
   res.status(200).json({data: document});
 });
@@ -57,7 +57,7 @@ exports.changeUserPassword = asyncHandler(async (req, res, next) => {
   );
 
   if (!document) {
-    return next(new ApiError(`No document for this id ${req.params.id}`, 404));
+    return next(new ApiError(404, `No document for this id ${req.params.id}`));
   }
   res.status(200).json({data: document});
 });

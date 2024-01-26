@@ -50,7 +50,7 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
   // 1) Get user by email
   const user = await User.findOne({email: req.body.email});
   if (!user) {
-    return next(new ApiError(`There is no user with that email ${req.body.email}`, 404));
+    return next(new ApiError(404, `There is no user with that email ${req.body.email}`,));
   }
   // 2) If user exist, Generate hash reset random 6 digits and save it in db
   const resetCode = Math.floor(100000 + Math.random() * 900000).toString();
@@ -80,7 +80,7 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
     user.passwordResetVerified = undefined;
 
     await user.save();
-    return next(new ApiError('There is an error in sending email', 500));
+    return next(new ApiError(500, 'There is an error in sending email',));
   }
 
   res
@@ -102,7 +102,7 @@ exports.verifyPassResetCode = asyncHandler(async (req, res, next) => {
     passwordResetCode: hashedResetCode, passwordResetExpires: {$gt: Date.now()},
   });
   if (!user) {
-    return next(new ApiError('Reset code invalid or expired'));
+    return next(new ApiError(404, 'Reset code invalid or expired'));
   }
 
   // 2) Reset code valid
@@ -119,12 +119,12 @@ exports.resetPassword = asyncHandler(async (req, res, next) => {
   // 1) Get user based on email
   const user = await User.findOne({email: req.body.email});
   if (!user) {
-    return next(new ApiError(`There is no user with email ${req.body.email}`, 404));
+    return next(new ApiError(404, `There is no user with email ${req.body.email}`,));
   }
 
   // 2) Check if reset code verified
   if (!user.passwordResetVerified) {
-    return next(new ApiError('Reset code not verified', 400));
+    return next(new ApiError(400, 'Reset code not verified',));
   }
 
   user.password = req.body.newPassword;
