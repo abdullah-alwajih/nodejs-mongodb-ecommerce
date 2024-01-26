@@ -15,7 +15,7 @@ app.use(express.static(path.join(__dirname, 'uploads')));
 
 dbConnection();
 
-initCROSOrigins(app)
+// initCROSOrigins(app)
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
