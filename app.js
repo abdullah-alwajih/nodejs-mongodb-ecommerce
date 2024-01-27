@@ -9,6 +9,7 @@ const dbConnection = require("./core/config/database");
 const globalError = require("./core/middlewares/errorMiddleware");
 const initRoutes = require("./core/config/routes");
 const initCROSOrigins = require("./core/config/cors_origins");
+const compression = require("compression");
 
 const app = express();
 app.use(express.static(path.join(__dirname, 'uploads')));
@@ -21,7 +22,8 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+// compress all responses
+app.use(compression())
 initRoutes(app);
 
 
