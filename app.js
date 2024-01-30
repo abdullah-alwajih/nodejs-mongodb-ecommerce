@@ -13,6 +13,8 @@ const compression = require("compression");
 const rateLimit = require("express-rate-limit");
 const authRoute = require("./modules/users/routes/authRoute");
 const hpp = require("hpp");
+const mongoSanitize = require('express-mongo-sanitize');
+const {xss} = require("express-xss-sanitizer");
 
 const app = express();
 app.use(express.static(path.join(__dirname, 'uploads')));
@@ -27,6 +29,12 @@ app.use(express.json({
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// To remove data using these defaults:
+app.use(mongoSanitize());
+app.use(xss());
+
+
 // compress all responses
 app.use(compression())
 
