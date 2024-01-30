@@ -11,7 +11,8 @@ const initRoutes = require("./core/config/routes");
 const initCROSOrigins = require("./core/config/cors_origins");
 const compression = require("compression");
 const rateLimit = require("express-rate-limit");
-const {json} = require("express");
+const authRoute = require("./modules/users/routes/authRoute");
+const hpp = require("hpp");
 
 const app = express();
 app.use(express.static(path.join(__dirname, 'uploads')));
@@ -42,6 +43,8 @@ const limiter = rateLimit({
 // Apply the rate limiting middleware to all requests.
 app.use('/api', limiter);
 
+// app.use(bodyParser.urlencoded()); // Make sure the body is parsed beforehand.
+app.use(hpp({whitelist: ['filter']})); // <- THIS IS THE NEW LINE
 initRoutes(app);
 
 
