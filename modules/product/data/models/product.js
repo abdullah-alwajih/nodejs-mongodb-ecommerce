@@ -1,6 +1,13 @@
 const mongoose = require('mongoose');
 const productSchema = require("../schema/productSchema");
 
+productSchema.virtual('reviews', {
+  ref: 'Review',
+  foreignField: 'product',
+  localField: '_id',
+});
+
+
 // Mongoose query middleware
 productSchema.pre(/^find/, function (next) {
   this.populate({

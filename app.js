@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const stripe = require('stripe')('sk_test_...');
 
 const path = require('path');
 const cookieParser = require('cookie-parser');
