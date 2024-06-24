@@ -17,7 +17,7 @@ const {
   setProductIdAndUserIdToBody,
 } = require('../manager/controllers/reviews');
 
-const {authenticated, authorized} = require('../../../core/middlewares/authMiddleware');
+const {authenticated, authenticateAndAuthorize} = require('../../../core/middlewares/authMiddleware');
 
 const router = express.Router({mergeParams: true});
 

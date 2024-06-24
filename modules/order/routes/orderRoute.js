@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router(); // Initialize router
-const {authenticated, authorized} = require("../../../core/middlewares/authMiddleware");
+const {authenticated, authenticateAndAuthorize} = require("../../../core/middlewares/authMiddleware");
 
 const {
   getBrands,
@@ -21,11 +21,11 @@ const {
 // Define routes and use middleware
 router.route('/')
   .get(getBrands)
-  .post(authenticated, authorized('admin', 'manager'), saveBrandMiddleware, storeBrand);
+  .post(authenticateAndAuthorize('admin', 'manager'), saveBrandMiddleware, storeBrand);
 
 router.route('/:id')
   .get(showBrandMiddleware, getBrand)
-  .put(authenticated, authorized('admin', 'manager'), updateBrandMiddleware, updateBrand)
-  .delete(authenticated, authorized('admin'), deleteBrandMiddleware, deleteBrand);
+  .put(authenticateAndAuthorize('admin', 'manager'), updateBrandMiddleware, updateBrand)
+  .delete(authenticateAndAuthorize('admin'), deleteBrandMiddleware, deleteBrand);
 
 module.exports = router; // Export the router

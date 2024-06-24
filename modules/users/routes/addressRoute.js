@@ -13,7 +13,7 @@ const {
 
 const router = express.Router();
 
-router.use(authenticated, authorized('user'));
+router.use(authenticateAndAuthorize('user'));
 
 router.route('/').post(addAddress).get(getLoggedUserAddresses);
 

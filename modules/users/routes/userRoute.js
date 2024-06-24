@@ -1,5 +1,5 @@
 const express = require('express');
-const {authenticated, authorized} = require("../../../core/middlewares/authMiddleware");
+const {authenticated, authenticateAndAuthorize} = require("../../../core/middlewares/authMiddleware");
 
 
 const {
@@ -35,7 +35,7 @@ router.put('/updateMe', updateLoggedUserValidator, updateLoggedUserData);
 router.delete('/deleteMe', deleteLoggedUserData);
 
 // Admin
-router.use(authorized('admin', 'manager'));
+router.use(authenticateAndAuthorize('admin', 'manager'));
 router.put(
   '/changePassword/:id',
   changeUserPasswordValidator,

@@ -3,7 +3,7 @@ const router = express.Router(); // Initialize router
 
 const {
   authenticated,
-  authorized
+  authenticateAndAuthorize
 } = require("../../../core/middlewares/authMiddleware");
 
 const {
@@ -25,11 +25,11 @@ const {
 // Define routes and use middleware
 router.route('/')
   .get(getProducts)
-  .post(authenticated, authorized('admin', 'manager'), saveProductMiddleware, storeProduct);
+  .post(authenticateAndAuthorize('admin', 'manager'), saveProductMiddleware, storeProduct);
 
 router.route('/:id')
   .get(showProductMiddleware, getProduct)
-  .put(authenticated, authorized('admin', 'manager'), updateProductMiddleware, updateProduct)
-  .delete(authenticated, authorized('admin'), deleteProductMiddleware, deleteProduct);
+  .put(authenticateAndAuthorize('admin', 'manager'), updateProductMiddleware, updateProduct)
+  .delete(authenticateAndAuthorize('admin'), deleteProductMiddleware, deleteProduct);
 
 module.exports = router; // Export the router
