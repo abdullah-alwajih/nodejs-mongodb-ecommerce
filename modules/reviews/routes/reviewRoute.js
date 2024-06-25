@@ -25,8 +25,7 @@ router
   .route('/')
   .get(createFilterObj, getReviews)
   .post(
-    authenticated,
-    authorized('user'),
+    authenticateAndAuthorize('user'),
     setProductIdAndUserIdToBody,
     createReviewValidator,
     createReview
@@ -35,14 +34,12 @@ router
   .route('/:id')
   .get(getReviewValidator, getReview)
   .put(
-    authenticated,
-    authorized('user'),
+    authenticateAndAuthorize('user'),
     updateReviewValidator,
     updateReview
   )
   .delete(
-    authenticated,
-    authorized('user', 'manager', 'admin'),
+    authenticateAndAuthorize('user', 'manager', 'admin'),
     deleteReviewValidator,
     deleteReview
   );

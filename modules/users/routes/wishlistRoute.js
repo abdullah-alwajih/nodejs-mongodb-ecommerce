@@ -1,15 +1,12 @@
 const express = require('express');
 
 const {
-  authenticated,
-  authorized,
+  authenticateAndAuthorize,
 } = require("../../../core/middlewares/authMiddleware");
 
 
 const {
-  addProductToWishlist,
-  removeProductFromWishlist,
-  getLoggedUserWishlist,
+  addProductToWishlist, removeProductFromWishlist, getLoggedUserWishlist,
 } = require('../manager/controllers/wishlistController');
 
 const router = express.Router();
