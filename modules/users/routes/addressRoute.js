@@ -1,8 +1,7 @@
 const express = require('express');
 
 const {
-  authenticated,
-  authorized,
+  authenticateAndAuthorize,
 } = require("../../../core/middlewares/authMiddleware");
 
 const {
