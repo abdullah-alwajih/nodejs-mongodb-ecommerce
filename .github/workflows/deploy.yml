@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -24,9 +24,9 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          IMAGE_TAG=${{ github.sha }}
-          docker build -t abdullahalwajih/api-ecommerce:${IMAGE_TAG} .
-          docker push abdullahalwajih/api-ecommerce:${IMAGE_TAG}
+          IMAGE_TAG=${GITHUB_SHA}
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/api-ecommerce:${IMAGE_TAG} .
+          docker push ${{ secrets.DOCKER_USERNAME }}/api-ecommerce:${IMAGE_TAG}
           echo "IMAGE_TAG=${IMAGE_TAG}" >> $GITHUB_ENV
 
       - name: Set up Kubernetes
@@ -34,8 +34,16 @@ jobs:
           mkdir -p $HOME/.kube
           echo "${{ secrets.KUBECONFIG_DATA }}" | base64 --decode > $HOME/.kube/config
 
+      - name: Print kubeconfig (Debugging)
+        run: cat $HOME/.kube/config
+
+      - name: Get Kubernetes Contexts (Debugging)
+        run: kubectl config get-contexts
+
+      - name: Set kubectl context
+        run: kubectl config use-context minikube
+
       - name: Deploy to Kubernetes
         run: |
-          kubectl set image deployment/api-ecommerce-deployment api-ecommerce=abdullahalwajih/api-ecommerce:${{ env.IMAGE_TAG }}
-        env:
-          KUBECONFIG: $HOME/.kube/config
+          kubectl set image deployment/api-ecommerce-deployment api-ecommerce=${{ secrets.DOCKER_USERNAME }}/api-ecommerce:${{ env.IMAGE_TAG }}
+
