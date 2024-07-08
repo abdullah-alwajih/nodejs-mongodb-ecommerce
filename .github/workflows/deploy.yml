@@ -34,25 +34,11 @@ jobs:
           mkdir -p $HOME/.kube
           echo "${{ secrets.KUBECONFIG_DATA }}" | base64 --decode > $HOME/.kube/config
           chmod 600 $HOME/.kube/config
-          # Set permissions for the certificate files
-          chmod 600 /root/.minikube/ca.crt
-          chmod 600 /root/.minikube/profiles/minikube/client.crt
-          chmod 600 /root/.minikube/profiles/minikube/client.key
         env:
           KUBECONFIG: $HOME/.kube/config
 
       - name: Verify Kubernetes connection
         run: kubectl get nodes
-        env:
-          KUBECONFIG: $HOME/.kube/config
-
-      - name: Print kubeconfig (Debugging)
-        run: cat $HOME/.kube/config
-        env:
-          KUBECONFIG: $HOME/.kube/config
-
-      - name: Get Kubernetes Contexts (Debugging)
-        run: kubectl config get-contexts
         env:
           KUBECONFIG: $HOME/.kube/config
 
