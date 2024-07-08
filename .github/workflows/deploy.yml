@@ -39,14 +39,20 @@ jobs:
 
       - name: Print kubeconfig (Debugging)
         run: cat $HOME/.kube/config
+        env:
+          KUBECONFIG: $HOME/.kube/config
 
       - name: Get Kubernetes Contexts (Debugging)
         run: kubectl config get-contexts
+        env:
+          KUBECONFIG: $HOME/.kube/config
 
       - name: Set kubectl context
         run: kubectl config use-context minikube
+        env:
+          KUBECONFIG: $HOME/.kube/config
 
       - name: Deploy to Kubernetes
-        run: |
-          kubectl set image deployment/api-ecommerce-deployment api-ecommerce=${{ secrets.DOCKER_USERNAME }}/api-ecommerce:${{ env.IMAGE_TAG }}
-
+        run: kubectl set image deployment/api-ecommerce-deployment api-ecommerce=${{ secrets.DOCKER_USERNAME }}/api-ecommerce:${{ env.IMAGE_TAG }}
+        env:
+          KUBECONFIG: $HOME/.kube/config
