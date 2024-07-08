@@ -33,6 +33,9 @@ jobs:
         run: |
           mkdir -p $HOME/.kube
           echo "${{ secrets.KUBECONFIG_DATA }}" | base64 --decode > $HOME/.kube/config
+          chmod 600 $HOME/.kube/config
+        env:
+          KUBECONFIG: $HOME/.kube/config
 
       - name: Print kubeconfig (Debugging)
         run: cat $HOME/.kube/config
