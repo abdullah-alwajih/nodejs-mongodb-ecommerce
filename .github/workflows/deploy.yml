@@ -37,6 +37,10 @@ jobs:
         env:
           KUBECONFIG: $HOME/.kube/config
 
+      - name: Verify Kubernetes connection
+        run: kubectl get nodes
+
+
       - name: Print kubeconfig (Debugging)
         run: cat $HOME/.kube/config
         env:
@@ -46,6 +50,7 @@ jobs:
         run: kubectl config get-contexts
         env:
           KUBECONFIG: $HOME/.kube/config
+
 
       - name: Deploy to Kubernetes
         run: kubectl set image deployment/api-ecommerce-deployment api-ecommerce=${{ secrets.DOCKER_USERNAME }}/api-ecommerce:${{ env.IMAGE_TAG }}
