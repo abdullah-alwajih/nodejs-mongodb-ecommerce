@@ -53,8 +53,8 @@ jobs:
           apiVersion: v1
           clusters:
           - cluster:
-              certificate-authority-data: ${KUBE_CA}
-              server: ${KUBE_SERVER}
+              certificate-authority-data: ${{ secrets.KUBE_CA }}
+              server: ${{ secrets.KUBE_SERVER }}
             name: minikube
           contexts:
           - context:
@@ -67,22 +67,30 @@ jobs:
           users:
           - name: github-action-sa
             user:
-              token: ${KUBE_TOKEN}
-              client-certificate-data: ${KUBE_CLIENT_CERT}
-              client-key-data: ${KUBE_CLIENT_KEY}
+              token: ${{ secrets.KUBE_TOKEN }}
+              client-certificate-data: ${{ secrets.KUBE_CLIENT_CERT }}
+              client-key-data: ${{ secrets.KUBE_CLIENT_KEY }}
           " > $HOME/.kube/config
 
       - name: Create configmap.yaml
-        run: echo "${{ secrets.CONFIGMAP_YAML }}" > configmap.yaml
+        run: |
+          echo "${{ secrets.CONFIGMAP_YAML }}" > configmap.yaml
+          cat configmap.yaml
 
       - name: Create secret.yaml
-        run: echo "${{ secrets.SECRET_YAML }}" > secret.yaml
+        run: |
+          echo "${{ secrets.SECRET_YAML }}" > secret.yaml
+          cat secret.yaml
 
       - name: Create deployment.yaml
-        run: echo "${{ secrets.DEPLOYMENT_YAML }}" > deployment.yaml
+        run: |
+          echo "${{ secrets.DEPLOYMENT_YAML }}" > deployment.yaml
+          cat deployment.yaml
 
       - name: Create service.yaml
-        run: echo "${{ secrets.SERVICE_YAML }}" > service.yaml
+        run: |
+          echo "${{ secrets.SERVICE_YAML }}" > service.yaml
+          cat service.yaml
 
       - name: Deploy to Kubernetes
         run: |
