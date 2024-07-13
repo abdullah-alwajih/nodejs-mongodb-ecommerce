@@ -72,6 +72,18 @@ jobs:
               client-key-data: ${KUBE_CLIENT_KEY}
           " > $HOME/.kube/config
 
+      - name: Create configmap.yaml
+        run: echo "${{ secrets.CONFIGMAP_YAML }}" > configmap.yaml
+
+      - name: Create secret.yaml
+        run: echo "${{ secrets.SECRET_YAML }}" > secret.yaml
+
+      - name: Create deployment.yaml
+        run: echo "${{ secrets.DEPLOYMENT_YAML }}" > deployment.yaml
+
+      - name: Create service.yaml
+        run: echo "${{ secrets.SERVICE_YAML }}" > service.yaml
+
       - name: Deploy to Kubernetes
         run: |
           kubectl apply -f configmap.yaml
