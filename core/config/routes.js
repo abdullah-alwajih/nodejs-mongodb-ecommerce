@@ -19,7 +19,7 @@ const initRoutes = (app) => {
   app.use('/api/v1/reviews', reviewRoute);
   app.use('/api/v1/wishlist', wishlistRoute);
   app.use('/api/v1/addresses', addressRoute);
-  app.get('/', (req, res) => res.status(200).send('API 3 is running successfully.'));
+  app.get('/', (req, res) => res.status(200).send('API 4 is running successfully.'));
   app.all('*', (req, res, next) => res.status(404).send(`Can't find this route: ${req.originalUrl}`));
 }
 
