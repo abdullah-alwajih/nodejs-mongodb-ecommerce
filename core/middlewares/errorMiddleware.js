@@ -9,18 +9,11 @@ const errorFormat = (err, res) => {
   });
 };
 
-
-const handleJwtInvalidSignature = () =>
-  new ApiError(401, 'Invalid token, please login again..',);
-
-const handleJwtExpired = () =>
-  new ApiError(401, 'Expired token, please login again..',);
-
 const errorMiddleware = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
   err.status = err.status || 'error';
-  if (err.name === 'JsonWebTokenError') err = handleJwtInvalidSignature();
-  if (err.name === 'TokenExpiredError') err = handleJwtExpired();
+  if (err.name === 'JsonWebTokenError') err = new ApiError(401, __('error.invalid_token'));
+  else if (err.name === 'TokenExpiredError') err = new ApiError(401, __('error.expired_token'));
   errorFormat(err, res);
 };
 

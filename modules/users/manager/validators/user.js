@@ -4,75 +4,77 @@ const {body, param, check} = require('express-validator');
 const User = require('../../data/models/userModel');
 
 
-exports.mongoIdRule = param('id').isMongoId().withMessage('Invalid brand id format');
+exports.mongoIdRule = param('id')
+  .isMongoId()
+  .withMessage((value, {req}) => req.__('validation.invalid_id_format'));
 
 exports.roleUserName = body('name')
   .notEmpty()
-  .withMessage('User required')
+  .withMessage((value, {req}) => req.__('validation.user_name_required'))
   .isLength({min: 3})
-  .withMessage('Too short User name')
+  .withMessage((value, {req}) => req.__('validation.user_name_too_short'))
   .custom((val, {req}) => {
     req.body.slug = slugify(val);
     return true;
-  })
+  });
 
 exports.roleUserEmail = body('email')
   .notEmpty()
-  .withMessage('Email required')
+  .withMessage((value, {req}) => req.__('validation.email_required'))
   .isEmail()
-  .withMessage('Invalid email address')
-  .custom((val) =>
-    User.findOne({email: val}).then((user) => {
-      if (user) {
-        return Promise.reject(new Error('E-mail already in user'));
-      }
-    })
-  )
+  .withMessage((value, {req}) => req.__('validation.invalid_email'))
+  .custom(async (val, {req}) => {
+    const user = await User.findOne({email: val});
+    if (user) {
+      throw new Error(req.__('validation.email_already_in_use'));
+    }
+    return true;
+  });
 
 
 exports.roleUserEmailLogin = check('email')
   .notEmpty()
-  .withMessage('Email required')
+  .withMessage((value, {req}) => req.__('validation.email_required'))
   .isEmail()
-  .withMessage('Invalid email address')
+  .withMessage((value, {req}) => req.__('validation.invalid_email'));
 
 
 exports.roleUserPassword = body('password')
   .notEmpty()
-  .withMessage('Password required')
+  .withMessage((value, {req}) => req.__('validation.password_required'))
   .isLength({min: 6})
-  .withMessage('Password must be at least 6 characters')
+  .withMessage((value, {req}) => req.__('validation.password_too_short'));
 
 exports.roleUserPasswordConfirm = body('passwordConfirm')
-  .notEmpty().withMessage('Password confirmation required')
+  .notEmpty()
+  .withMessage((value, {req}) => req.__('validation.password_confirmation_required'))
   .custom((passwordConfirm, {req}) => {
     if (passwordConfirm !== req.body.password) {
-      throw new Error('Password Confirmation incorrect');
+      throw new Error(req.__('validation.password_confirmation_incorrect'));
     }
     return true;
-  })
+  });
 
 exports.roleUserCurrentPassword = body('currentPassword')
   .notEmpty()
-  .withMessage('You must enter your current password')
+  .withMessage((value, {req}) => req.__('validation.current_password_required'))
   .custom(async (val, {req}) => {
-    // 1) Verify current password
     const user = await User.findById(req.params.id);
     if (!user) {
-      throw new Error('There is no user for this id');
+      throw new Error(req.__('validation.no_user_found_for_id'));
     }
     const isCorrectPassword = await bcrypt.compare(req.body.currentPassword, user.password);
     if (!isCorrectPassword) {
-      throw new Error('Incorrect current password');
+      throw new Error(req.__('validation.incorrect_current_password'));
     }
     return true;
-  })
+  });
 
 
 exports.roleUserPhone = body('phone')
   .optional()
   .isMobilePhone(['ar-EG', 'ar-SA'])
-  .withMessage('Invalid phone number only accepted Egy and SA Phone numbers')
+  .withMessage((value, {req}) => req.__('validation.invalid_phone_number'));
 
 exports.roleUserProfileImg = body('profileImg').optional()
 

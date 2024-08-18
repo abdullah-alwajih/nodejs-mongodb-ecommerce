@@ -10,7 +10,7 @@ dotenv.config({path: '../../core.env'});
 dbConnection();
 
 // Read data
-const products = JSON.parse(fs.readFileSync('/modules/product/data/dummy/products.json'));
+const products = JSON.parse(fs.readFileSync('/modules/product/data/dummy/products.json', 'utf8'));
 
 
 // Insert data into DB
@@ -37,7 +37,7 @@ const destroyData = async () => {
 
 // node seeder.js -d
 if (process.argv[2] === '-i') {
-  insertData();
+  await insertData();
 } else if (process.argv[2] === '-d') {
-  destroyData();
+  await destroyData();
 }

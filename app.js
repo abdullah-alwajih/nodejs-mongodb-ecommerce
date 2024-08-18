@@ -17,6 +17,7 @@ const hpp = require("hpp");
 const mongoSanitize = require('express-mongo-sanitize');
 
 const {xss} = require("express-xss-sanitizer");
+const i18n = require("i18n");
 
 const app = express();
 app.use(express.static(path.join(__dirname, 'uploads')));
@@ -55,11 +56,11 @@ app.use('/api', limiter);
 
 // app.use(bodyParser.urlencoded()); // Make sure the body is parsed beforehand.
 app.use(hpp({whitelist: ['filter']})); // <- THIS IS THE NEW LINE
-initRoutes(app);
 
 
 initLocales(app);
 
+initRoutes(app);
 
 app.use(globalError);
 

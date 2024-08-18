@@ -1,0 +1,22 @@
+{
+	"fields": {
+		"brand": "fields.brand"
+	},
+	"validation": {
+		"required": "validation.required",
+		"user_name_required": "validation.user_name_required",
+		"user_name_too_short": "validation.user_name_too_short",
+		"email_required": "validation.email_required",
+		"invalid_email": "validation.invalid_email",
+		"password_required": "validation.password_required",
+		"password_too_short": "validation.password_too_short",
+		"password_confirmation_required": "validation.password_confirmation_required",
+		"current_password_required": "validation.current_password_required",
+		"invalid_phone_number": "validation.invalid_phone_number",
+		"email_already_in_use": "validation.email_already_in_use",
+		"invalid_id_format": "validation.invalid_id_format"
+	},
+	"error": {
+		"bad_request": "error.bad_request"
+	}
+}

@@ -1,3 +1,52 @@
 {
-  "Hello World": "Hello World2"
+  "Hello World": "Hello World2",
+  "error": {
+    "http_not_found": "Sorry, the page you are looking for does not exist.",
+    "access_denied": "You do not have permission to access.",
+    "bad_request": "The request you made is invalid. Please check the entered data.",
+    "conflict": "There is a conflict with the current request. Please try again.",
+    "gone": "The resource you are trying to access is no longer available.",
+    "length_required": "The request requires a content length. Please include the content length.",
+    "locked": "The resource you are trying to access is currently locked.",
+    "method_not_allowed": "The request method is not allowed. Please check the correct method.",
+    "not_acceptable": "The requested content is not acceptable. Please check the content type.",
+    "precondition_failed": "The preconditions for the request failed. Please check the conditions.",
+    "precondition_required": "The request requires preconditions. Please check the required conditions.",
+    "service_unavailable": "The service is currently unavailable. Please try again later.",
+    "too_many_requests": "Too many requests have been made in a short time. Please wait and try again later.",
+    "unauthorized": "You need to log in to access this page.",
+    "unprocessable_entity": "The request cannot be processed. Please check the entered data.",
+    "unsupported_media_type": "The media type is unsupported. Please check the supported media type.",
+    "invalid_token": "Invalid token, please login again.",
+    "expired_token": "Your token has expired. Please log in again.",
+    "not_logged_in": "You are not logged in, Please login to get access to this route.",
+    "user_no_longer_exists": "The user that belongs to this token does no longer exist.",
+    "password_changed": "User recently changed his password. Please login again.",
+    "failed_to_authenticate": "Failed to authenticate token.",
+    "access_denied_route": "You are not allowed to access this route."
+  },
+  "fields": {
+    "brand": "Brand",
+    "category": "Category"
+  },
+  "validation": {
+    "required": "%s is required",
+    "unique": "%s must be unique",
+    "minlength": "%s is too short",
+    "maxlength": "%s is too long",
+    "invalid_id_format": "Invalid ID format",
+    "user_name_required": "User name is required",
+    "user_name_too_short": "User name is too short, it must be at least 3 characters",
+    "email_required": "Email is required",
+    "invalid_email": "Invalid email address",
+    "email_already_in_use": "This email is already in use",
+    "password_required": "Password is required",
+    "password_too_short": "Password must be at least 6 characters",
+    "password_confirmation_required": "Password confirmation is required",
+    "password_confirmation_incorrect": "Password confirmation does not match",
+    "current_password_required": "You must enter your current password",
+    "no_user_found_for_id": "No user found for this ID",
+    "incorrect_current_password": "The current password you entered is incorrect",
+    "invalid_phone_number": "Invalid phone number. Only Egyptian and Saudi numbers are accepted"
+  }
 }

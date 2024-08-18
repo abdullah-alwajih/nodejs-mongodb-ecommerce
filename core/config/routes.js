@@ -7,7 +7,6 @@ const addressRoute = require("../../modules/users/routes/addressRoute");
 const wishlistRoute = require("../../modules/users/routes/wishlistRoute");
 const reviewRoute = require("../../modules/reviews/routes/reviewRoute");
 const authRoute = require("../../modules/users/routes/authRoute");
-const ApiError = require("../base/models/apiError");
 
 const initRoutes = (app) => {
   app.use('/api/v1/auth', authRoute);
