@@ -39,6 +39,7 @@ app.use(xss());
 
 // compress all responses
 app.use(compression())
+console.log('compression');
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
@@ -52,19 +53,26 @@ const limiter = rateLimit({
 
 // Apply the rate limiting middleware to all requests.
 app.use('/api', limiter);
+console.log('limiter');
 
 // app.use(bodyParser.urlencoded()); // Make sure the body is parsed beforehand.
 app.use(hpp({whitelist: ['filter']})); // <- THIS IS THE NEW LINE
 initRoutes(app);
+console.log('initRoutes');
+
+
 initLocales(app);
 
+console.log('initLocales');
 
 app.use(globalError);
+console.log('globalError');
 
 
 // Handle Rejection outside express
 process.on("unhandledRejection", (err) => {
   console.log(`UnhandledRejection error ${err.name} | ${err.message}`);
 });
+console.log('unhandledRejection');
 
 module.exports = app;
