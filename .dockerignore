@@ -1,3 +1,5 @@
 node_modules
 .github
 npm-debug.log
+.env
+uploads
