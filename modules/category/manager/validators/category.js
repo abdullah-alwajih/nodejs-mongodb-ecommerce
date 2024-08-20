@@ -1,12 +1,11 @@
 const {body, param} = require("express-validator");
 const slugify = require("slugify");
 
-exports.mongoIdRule = param('id').isMongoId().withMessage('Invalid category id format');
 
 exports.categoryNameRule = body('name')
-  .notEmpty().withMessage('Category required')
-  .isLength({min: 3}).withMessage('Too short category name')
-  .isLength({max: 32}).withMessage('Too long category name')
+  .notEmpty().withMessage((value, {req}) => req.__('validation.required', req.__('fields.category')))
+  .isLength({min: 3}).withMessage((value, {req}) => req.__('validation.minlength', req.__('fields.category')))
+  .isLength({max: 32}).withMessage((value, {req}) => req.__('validation.maxlength', req.__('fields.category')))
   .custom((val, {req}) => {
     req.body.slug = slugify(val);
     return true;

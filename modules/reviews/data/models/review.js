@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const reviewSchema = require("../schema/reviewSchema");
+const Product = require('/modules/product/data/models/product');
 
 reviewSchema.pre(/^find/, function (next) {
   this.populate({path: 'user', select: 'name'});

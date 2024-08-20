@@ -3,9 +3,11 @@ const orderSchema = require("../schema/orderSchema");
 
 orderSchema.pre(/^find/, function (next) {
   this.populate({
-    path: 'user', select: 'name profileImg email phone',
+    path: 'user',
+    select: 'name profileImg email phone',
   }).populate({
-    path: 'cartItems.product', select: 'title imageCover ',
+    path: 'cartItems.product',
+    select: 'title imageCover ',
   });
 
   next();

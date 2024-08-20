@@ -27,7 +27,8 @@
   },
   "fields": {
     "brand": "Brand",
-    "category": "Category"
+    "category": "Category",
+    "subcategory": "SubCategory"
   },
   "validation": {
     "required": "%s is required",

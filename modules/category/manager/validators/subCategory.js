@@ -1,17 +1,16 @@
 const {body, param} = require("express-validator");
 const slugify = require("slugify");
 
-exports.subCategoryIdRule = param('id').isMongoId().withMessage('Invalid sub category id format');
 
 exports.subCategoryNameRule = body('name')
-  .notEmpty().withMessage('SubCategory required')
-  .isLength({min: 2}).withMessage('Too short Subcategory name')
-  .isLength({max: 32}).withMessage('Too long Subcategory name')
+  .notEmpty().withMessage((value, {req}) => req.__('validation.required', req.__('fields.subcategory')))
+  .isLength({min: 2}).withMessage((value, {req}) => req.__('validation.minlength', req.__('fields.subcategory')))
+  .isLength({max: 32}).withMessage((value, {req}) => req.__('validation.maxlength', req.__('fields.subcategory')))
   .custom((val, {req}) => {
     req.body.slug = slugify(val);
     return true;
   });
 
 exports.categoryIdRule = body('category')
-  .notEmpty().withMessage('subCategory must be belong to category')
-  .isMongoId().withMessage('Invalid Category id format');
+  .notEmpty().withMessage((value, {req}) => req.__('validation.required', req.__('fields.category')))
+  .isMongoId().withMessage((value, {req}) => req.__('validation.invalid_id_format'))

@@ -1,7 +1,6 @@
 const {body, param} = require("express-validator");
 const slugify = require("slugify");
 
-exports.mongoIdRule = param('id').isMongoId().withMessage('Invalid brand id format');
 
 exports.brandNameRule = body('name')
   .notEmpty().withMessage('Brand required')

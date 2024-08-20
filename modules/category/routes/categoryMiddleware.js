@@ -1,6 +1,7 @@
-const {mongoIdRule, categoryNameRule} = require("../manager/validators/category");
+const {categoryNameRule} = require("../manager/validators/category");
 const {validatorMiddleware} = require("../../../core/middlewares/validatorMiddleware");
 const {uploadSingle} = require("../../../core/middlewares/uploadFileMiddleware");
+const {mongoIdRule} = require("../../../core/validators/mongoIdRule");
 
 const uploadImage = uploadSingle('categories')
 
@@ -20,6 +21,7 @@ exports.updateCategoryMiddleware = [
   categoryNameRule,
   validatorMiddleware,
 ];
+
 exports.deleteCategoryMiddleware = [
   mongoIdRule,
   validatorMiddleware,

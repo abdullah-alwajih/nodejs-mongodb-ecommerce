@@ -1,9 +1,10 @@
-const {subCategoryIdRule, subCategoryNameRule, categoryIdRule} = require("../manager/validators/subCategory");
+const {subCategoryNameRule, categoryIdRule} = require("../manager/validators/subCategory");
 const {validatorMiddleware} = require("../../../core/middlewares/validatorMiddleware");
+const {mongoIdRule} = require("../../../core/validators/mongoIdRule");
 
 
 exports.showSubCategoryMiddleware = [
-  subCategoryIdRule,
+  mongoIdRule,
   validatorMiddleware,
 ];
 
@@ -14,14 +15,14 @@ exports.saveSubCategoryMiddleware = [
 ];
 
 exports.updateSubCategoryMiddleware = [
-  subCategoryIdRule,
+  mongoIdRule,
   subCategoryNameRule,
   categoryIdRule,
   validatorMiddleware,
 ];
 
 exports.deleteSubCategoryMiddleware = [
-  subCategoryIdRule,
+  mongoIdRule,
   validatorMiddleware,
 ];
 

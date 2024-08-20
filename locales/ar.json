@@ -28,7 +28,8 @@
   },
   "fields": {
     "brand": "العلامة التجارية",
-    "category": "الفئة"
+    "category": "الفئة",
+    "subcategory": "الفئة الفرعية"
   },
   "validation": {
     "required": "يجب إدخال %s",

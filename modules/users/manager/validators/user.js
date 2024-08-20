@@ -4,10 +4,6 @@ const {body, param, check} = require('express-validator');
 const User = require('../../data/models/userModel');
 
 
-exports.mongoIdRule = param('id')
-  .isMongoId()
-  .withMessage((value, {req}) => req.__('validation.invalid_id_format'));
-
 exports.roleUserName = body('name')
   .notEmpty()
   .withMessage((value, {req}) => req.__('validation.user_name_required'))
