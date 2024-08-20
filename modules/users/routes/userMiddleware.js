@@ -1,5 +1,4 @@
 const {
-  mongoIdRule,
   roleUserName,
   roleUserEmail,
   roleUserPhone,
@@ -9,12 +8,13 @@ const {
   roleUserRole, roleUserEmailLogin, roleUserCurrentPassword,
 } = require("../manager/validators/user");
 
-const {validatorMiddleware} = require("../../../core/middlewares/validatorMiddleware");
+const validatorMiddleware = require("../../../core/middlewares/validatorMiddleware");
 const {uploadSingle} = require("../../../core/middlewares/uploadFileMiddleware");
 const {body, check} = require("express-validator");
 const User = require("../data/models/userModel");
 const bcrypt = require("bcryptjs");
 const slugify = require("slugify");
+const {mongoIdRule} = require("../../../core/validators/mongoIdRule");
 
 
 const uploadUserImage = uploadSingle('users')

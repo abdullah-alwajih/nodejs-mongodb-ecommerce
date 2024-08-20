@@ -1,5 +1,5 @@
 const {subCategoryNameRule, categoryIdRule} = require("../manager/validators/subCategory");
-const {validatorMiddleware} = require("../../../core/middlewares/validatorMiddleware");
+const validatorMiddleware = require("../../../core/middlewares/validatorMiddleware");
 const {mongoIdRule} = require("../../../core/validators/mongoIdRule");
 
 

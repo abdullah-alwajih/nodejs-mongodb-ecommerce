@@ -1,6 +1,6 @@
 const {check, body} = require('express-validator');
 const Review = require('../data/models/review');
-const {validatorMiddleware} = require("../../../core/middlewares/validatorMiddleware");
+const validatorMiddleware = require("../../../core/middlewares/validatorMiddleware");
 
 const {
   titleBrandRule,
