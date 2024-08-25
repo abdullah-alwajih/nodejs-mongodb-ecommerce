@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const brandSchema = require("../schema/brand.schema");
+const brandSchema = require("../schemas/brand.schema");
 
 const setImageURL = (doc) => {
   if (doc.image) doc.image = `${process.env.BASE_URL}/brands/${doc.image}`;

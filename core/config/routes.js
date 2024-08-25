@@ -1,12 +1,12 @@
-const categoryRoute = require("../../modules/category/routes/categoriesRoute");
-const subCategoryRoute = require("../../modules/category/routes/subCategoriesRoute");
-const brandRoute = require("../../modules/brands/routes/brandRoute");
-const productRoute = require("../../modules/product/routes/productRoute");
-const userRoute = require("../../modules/users/routes/userRoute");
-const addressRoute = require("../../modules/users/routes/addressRoute");
-const wishlistRoute = require("../../modules/users/routes/wishlistRoute");
-const reviewRoute = require("../../modules/reviews/routes/reviewRoute");
-const authRoute = require("../../modules/users/routes/authRoute");
+const categoryRoute = require("../../modules/categories/routes/category.route");
+const subCategoryRoute = require("../../modules/categories/routes/sub-category.route");
+const brandRoute = require("../../modules/brands/routes/brand.route");
+const productRoute = require("../../modules/products/routes/product.route");
+const userRoute = require("../../modules/users/routes/user.route");
+const addressRoute = require("../../modules/users/routes/address.route");
+const wishlistRoute = require("../../modules/users/routes/wishlist.route");
+const reviewRoute = require("../../modules/reviews/routes/review.route");
+const authRoute = require("../../modules/users/routes/auth.route");
 
 const initRoutes = (app) => {
   app.use('/api/v1/auth', authRoute);
