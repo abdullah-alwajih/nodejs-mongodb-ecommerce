@@ -1,19 +1,21 @@
 const sharp = require("sharp");
 const path = require("path");
 
-const imageProcessor = async (files, filePath) => {
+const imageProcessor = async (files, filePath, options = {}) => {
+  const {width, height, quality = 90} = options;
   const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-  if (Array.isArray(files)) {
-    return await Promise.all(files.map(async (file, index) => {
-      const fileName = `${filePath}-${uniqueSuffix}-${index + 1}-${path.parse(file.originalname).name.trim().replaceAll(' ', '-')}.jpeg`;
-      await sharp(file.buffer).resize(600, 600).jpeg({quality: 90}).toFile(`uploads/${filePath}/${fileName}`);
-      return fileName;
-    }));
-  } else {
-    const fileName = `${filePath}-${uniqueSuffix}-${path.parse(files.originalname).name.replaceAll(' ', '-')}.jpeg`;
-    await sharp(files.buffer).resize(600, 600).jpeg({quality: 90}).toFile(`uploads/${filePath}/${fileName}`);
+
+  const processFile = async (file, index = null) => {
+    const fileName = `${filePath}-${uniqueSuffix}${index !== null ? `-${index + 1}` : ''}-${path.parse(file.originalname).name.trim().replace(/\s+/g, '-')}.jpeg`;
+    const image = sharp(file.buffer);
+    width && height && image.resize(width, height);
+    await image.jpeg({quality}).toFile(`uploads/${filePath}/${fileName}`);
     return fileName;
-  }
+  };
+
+  return Array.isArray(files)
+    ? Promise.all(files.map((file, index) => processFile(file, index)))
+    : processFile(files);
 }
 
 module.exports = imageProcessor;

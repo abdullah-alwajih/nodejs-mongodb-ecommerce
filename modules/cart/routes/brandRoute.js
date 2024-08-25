@@ -8,7 +8,7 @@ const {
   storeBrand,
   updateBrand,
   deleteBrand
-} = require("../manager/controllers/brand");
+} = require("../manager/controllers/cart");
 
 const {
   showBrandMiddleware,

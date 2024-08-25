@@ -1,5 +1,5 @@
 const controller = require("../../../../core/base/controllers/controller");
-const Brand = require("../../data/models/brand");
+const Brand = require("../../data/models/brand.model");
 
 // @desc    Get list of brands
 // @route   GET /api/v1/brands
