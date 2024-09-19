@@ -29,10 +29,29 @@
   "fields": {
     "brand": "العلامة التجارية",
     "category": "الفئة",
-    "subcategory": "الفئة الفرعية"
+    "subcategory": "الفئة الفرعية",
+    "product_title": "عنوان المنتج",
+    "product_description": "وصف المنتج",
+    "product_quantity": "كمية المنتج",
+    "product_sold": "المنتجات المباعة",
+    "product_price": "سعر المنتج",
+    "product_price_after_discount": "السعر بعد الخصم",
+    "product_colors": "ألوان المنتج",
+    "product_image_cover": "صورة غلاف المنتج",
+    "product_images": "صور المنتج",
+    "ratings_average": "متوسط التقييمات",
+    "ratings_quantity": "عدد التقييمات"
+
   },
   "validation": {
     "required": "يجب إدخال %s",
+    "numeric": "يجب أن يكون %s رقمًا",
+    "array": "يجب أن يكون %s مصفوفة",
+    "no_category_found": "لم يتم العثور على فئة بهذا المعرف: %s",
+    "invalid_subcategories": "معرفات الفئات الفرعية غير صالحة",
+    "subcategories_not_belong_to_category": "الفئات الفرعية لا تنتمي إلى الفئة المحددة",
+    "price_after_discount_lower": "يجب أن يكون السعر بعد الخصم أقل من السعر الأصلي",
+    "rating_range": "يجب أن يكون التقييم بين 1.0 و 5.0",
     "unique": "يجب أن يكون %s فريدًا",
     "minlength": "الاسم في %s قصير جدًا",
     "maxlength": "الاسم في %s طويل جدًا",
